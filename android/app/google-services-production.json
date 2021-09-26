@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "27981024048",
+    "project_id": "appelasoma",
+    "storage_bucket": "appelasoma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27981024048:android:bd18a18357c77157c256f5",
+        "android_client_info": {
+          "package_name": "com.elasoma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27981024048-3v67p1mb8r3v4gq8oppkqciop5as8add.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_E8uVQJCEAODgWzFzkQm8HwOg6Y8nSYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27981024048-3v67p1mb8r3v4gq8oppkqciop5as8add.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
