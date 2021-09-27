@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "717743055260",
+    "project_id": "devsoma-84de9",
+    "storage_bucket": "devsoma-84de9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717743055260:android:741d04cc0860557e82e859",
+        "android_client_info": {
+          "package_name": "com.devsoma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717743055260-a881pis455foplag88sq5crcadmq78hr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOGPB9NpSkqJMLX0d8aiWGNfHRnXI88V8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717743055260-a881pis455foplag88sq5crcadmq78hr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "717743055260-f0mimpgc8nsu2g5ud0ocfpjjlsvlu2k9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devsoma"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
