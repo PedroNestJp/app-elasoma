@@ -10,7 +10,6 @@ import {initNotification} from './src/services/notifications/notifications';
 
 const appName = Platform.OS === 'ios' ? appIosName : appAndroidName;
 
-initSentry();
 initNotification();
 
 function HeadlessCheck({isHeadless}) {

@@ -11,7 +11,6 @@ import React from 'react';
 import {initSentry} from './src/services/app';
 import {initNotification} from './src/services/notifications/notifications';
 
-initSentry();
 initNotification();
 /**
  * @return {null}
