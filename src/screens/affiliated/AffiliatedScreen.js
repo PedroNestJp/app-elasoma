@@ -84,6 +84,7 @@ export default ({navigation}) => {
           loading={loadingPeople}
           noPaddingHorizontal>
           <FlatList
+            scrollIndicatorInsets={{right: Number.MIN_VALUE}}
             onEndReached={getMoreAffiliated}
             onEndReachedThreshold={0.5}
             onRefresh={getAffiliated}
