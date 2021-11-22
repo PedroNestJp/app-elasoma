@@ -15,10 +15,10 @@ target 'soma' do
   pod 'GoogleSignIn', '~> 5.0.0'
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text', :modular_headers => true
 
-  target 'somaTests' do
-    inherit! :complete
-    # Pods for testing
-  end
+#   target 'somaTests' do
+#     inherit! :complete
+#     # Pods for testing
+#   end
 
   # Enables Flipper.
   #
