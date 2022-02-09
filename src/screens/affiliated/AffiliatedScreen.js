@@ -6,8 +6,9 @@ import Header from '../../containers/Header';
 import AffiliatedCard from '../../containers/affiliated/AffiliatedCard';
 import {Screens} from '../../contants/screens';
 import {getUserFromStore} from '../../helpers/store';
-import {getAffiliatedsService} from '../../services/affiliated';
+import {getAffiliatedsPerCityService, getAffiliatedsService} from '../../services/affiliated';
 import StateSelector from '../../containers/forms/StateSelector';
+import CitySelector from '../../containers/forms/CitySelector';
 
 const NEWS_LIMIT = 10;
 
@@ -18,13 +19,33 @@ export default ({navigation}) => {
   const [loadingMorePeople, setLoadingMorePeople] = useState(false);
   const [people, setPeople] = useState(null);
   const [state, setState] = useState(user.state);
+  const [city, setCity] = useState('');
   const [startAfter, setStartAfter] = useState(null);
 
   useEffect(() => {
     getAffiliated();
-  }, [state]);
+  }, [city, state]);
 
-  const getAffiliated = async () => {
+  //separando por etapas
+
+  const getAffiliatedPerCity = async () => {
+    try {
+      setLoadingPeople(true);
+      const request = await getAffiliatedsPerCityService({
+        city,
+        limit: NEWS_LIMIT,
+        startAfter,
+      });
+      setPeople(request.affiliateds);
+      setStartAfter(request.lastOne);
+      setLoadingPeople(false);
+    } catch (e) {
+      console.log(e)
+      setLoadingPeople(false);
+    }
+  };
+
+  const getAffiliatedPerState = async () => {
     try {
       setLoadingPeople(true);
       const request = await getAffiliatedsService({
@@ -36,33 +57,63 @@ export default ({navigation}) => {
       setStartAfter(request.lastOne);
       setLoadingPeople(false);
     } catch (e) {
+      console.log(e)
       setLoadingPeople(false);
     }
   };
+
+  //fim separados
 
   const getMoreAffiliated = async () => {
     try {
       if (startAfter) {
         setLoadingMorePeople(true);
-        const request = await getAffiliatedsService({
-          state,
-          limit: NEWS_LIMIT,
-          startAfter,
-        });
+        let request = {};
+        if (city){
+          request = await getAffiliatedsPerCityService({
+            city,
+            limit: NEWS_LIMIT,
+            startAfter,
+          });
+        }
+       
+        else{
+           request = await getAffiliatedsService({
+            state,
+            limit: NEWS_LIMIT,
+            startAfter,
+          });
+        }
+
         setPeople(people.concat(request.affiliateds));
         setStartAfter(request.lastOne);
         setLoadingMorePeople(false);
       }
     } catch (e) {
+      console.log(e);
       setLoadingMorePeople(false);
     }
   };
 
+  const getAffiliated = async () => {
+    if (!city) {
+      getAffiliatedPerState();
+    }
+    else{
+      getAffiliatedPerCity();
+    }
+  };
   const Filter = () => (
     <View style={{marginVertical: 10, marginHorizontal: 24}}>
       <StateSelector
-        onValueChange={state => setState(state)}
+        onValueChange={state => {setState(state); setCity('')}}
         selected={state}
+      />
+
+      <CitySelector
+        onValueChange={city => setCity(city)}
+        selected={city}
+        stateId={state}
       />
     </View>
   );
