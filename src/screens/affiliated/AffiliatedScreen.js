@@ -9,6 +9,7 @@ import {getUserFromStore} from '../../helpers/store';
 import {getAffiliatedsPerCityService, getAffiliatedsService} from '../../services/affiliated';
 import StateSelector from '../../containers/forms/StateSelector';
 import CitySelector from '../../containers/forms/CitySelector';
+import SegmentSelector from '../../containers/forms/SegmentSelector';
 
 const NEWS_LIMIT = 10;
 
@@ -20,11 +21,12 @@ export default ({navigation}) => {
   const [people, setPeople] = useState(null);
   const [state, setState] = useState(user.state);
   const [city, setCity] = useState('');
+  const [segment, setSegment] = useState('');
   const [startAfter, setStartAfter] = useState(null);
 
   useEffect(() => {
     getAffiliated();
-  }, [city, state]);
+  }, [city, state, segment]);
 
   //separando por etapas
 
@@ -35,6 +37,7 @@ export default ({navigation}) => {
         city,
         limit: NEWS_LIMIT,
         startAfter,
+        segment
       });
       setPeople(request.affiliateds);
       setStartAfter(request.lastOne);
@@ -52,6 +55,7 @@ export default ({navigation}) => {
         state,
         limit: NEWS_LIMIT,
         startAfter,
+        segment
       });
       setPeople(request.affiliateds);
       setStartAfter(request.lastOne);
@@ -74,6 +78,7 @@ export default ({navigation}) => {
             city,
             limit: NEWS_LIMIT,
             startAfter,
+            segment
           });
         }
        
@@ -82,6 +87,7 @@ export default ({navigation}) => {
             state,
             limit: NEWS_LIMIT,
             startAfter,
+            segment
           });
         }
 
@@ -114,6 +120,11 @@ export default ({navigation}) => {
         onValueChange={city => setCity(city)}
         selected={city}
         stateId={state}
+      />
+
+<SegmentSelector
+        onValueChange={segment => setSegment(segment)}
+        selected={segment}
       />
     </View>
   );

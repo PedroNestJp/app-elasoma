@@ -1,29 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import {getCitiesService} from '../../services/states';
+import {getSegmentsService} from '../../services/states';
 import SelectPicker from '../../components/SelectPicker';
 import Loading from '../../components/Loading';
 
 export default ({onValueChange, stateId, selected}) => {
-  const [cities, setCities] = useState([]);
+  const [segments, setSegments] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getCities();
+    getSegments();
   }, [stateId]);
 
-  const getCities = async () => {
-    if (stateId) {
+  const getSegments = async () => {
       setLoading(true);
-      const cities = await getCitiesService(stateId);
-      setCities(
-        cities.map(state => ({
-          label: state.name,
-          value: state.id,
-          itemKey: state.id,
+      const segments = await getSegmentsService();
+      setSegments(
+        segments.map(segment => ({
+          label: segment.name,
+          value: segment.id,
+          itemKey: segment.id,
         })),
       );
       setLoading(false);
-    }
   };
 
   if (loading) return <Loading />;
@@ -31,10 +29,10 @@ export default ({onValueChange, stateId, selected}) => {
   return (
     <SelectPicker
       useNativeAndroidPickerStyle={false}
-      placeholder={{label: 'Selecione a cidade', value: '', color: '#9EA0A4'}}
+      placeholder={{label: 'Selecione o segmento', value: '', color: '#9EA0A4'}}
       onValueChange={onValueChange}
       value={selected}
-      items={cities}
+      items={segments}
     />
   );
 };
