@@ -94,7 +94,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Precisamos acessar sua galeria de fotos para que você possa inserir imagens no app</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>Este identificador será usado para entregar conteúdo personalizados para você.</string>
+	<string>Analisamos como você usa nosso aplicativo para oferecer melhores recursos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Bold.otf</string>
