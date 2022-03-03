@@ -22,6 +22,7 @@ export default ({
   ...rest
 }) => (
   <CustomSafeAreaScrollView
+    scrollIndicatorInsets={{right: Number.MIN_VALUE}}
     {...rest}
     style={[
       style,

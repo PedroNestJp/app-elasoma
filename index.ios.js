@@ -8,10 +8,8 @@ import {AppRegistry} from 'react-native';
 import App from './src/App';
 import {name} from './app.ios.json';
 import React from 'react';
-import {initSentry} from './src/services/app';
 import {initNotification} from './src/services/notifications/notifications';
 
-initSentry();
 initNotification();
 /**
  * @return {null}

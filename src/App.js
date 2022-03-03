@@ -9,11 +9,22 @@ import {persistor, store} from './redux/configureStore';
 import Routes from './routes/auth';
 import StatusBar from './components/StatusBar';
 import SplashScreen from './screens/auth/SplashScreen';
-import bootstrap from './bootstrap';
+import {
+  requestTrackingPermission,
+  getTrackingStatus,
+} from 'react-native-tracking-transparency';
 
 enableScreens();
 
 const App = () => {
+  useEffect(() => {
+    getTrackingStatus().then(status => {
+      if (status === 'not-determined') {
+        requestTrackingPermission();
+      }
+    });
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={<SplashScreen />} persistor={persistor}>

@@ -207,7 +207,9 @@ export default ({route}) => {
       <Header />
       <ViewContainer noPaddingHorizontal loading={loading}>
         {event && (
-          <ScrollView>
+          <ScrollView
+            scrollIndicatorInsets={{right: Number.MIN_VALUE}}
+          >
             <View style={{alignItems: 'center'}}>
               <View>
                 <EventHeader event={event} />
