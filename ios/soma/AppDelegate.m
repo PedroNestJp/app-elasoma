@@ -1,4 +1,5 @@
 #import <Firebase.h>
+#import "RNFBMessagingModule.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "AppDelegate.h"
 
