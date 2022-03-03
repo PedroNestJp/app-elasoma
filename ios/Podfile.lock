@@ -688,6 +688,8 @@ PODS:
     - InputMask (~> 6.1.0)
     - React-Core
     - React-RCTText
+  - react-native-tracking-transparency (0.1.1):
+    - React
   - react-native-webview (10.10.2):
     - React-Core
   - React-perflogger (0.66.3)
@@ -874,6 +876,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-text-input-mask (from `../node_modules/react-native-text-input-mask`)
+  - react-native-tracking-transparency (from `../node_modules/react-native-tracking-transparency`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -1013,6 +1016,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-simple-toast"
   react-native-text-input-mask:
     :path: "../node_modules/react-native-text-input-mask"
+  react-native-tracking-transparency:
+    :path: "../node_modules/react-native-tracking-transparency"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -1151,6 +1156,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
   react-native-simple-toast: bf002828cf816775a6809f7a9ec3907509bce11f
   react-native-text-input-mask: 36a546b378fadd2efe1b7484a859d34bc2c80395
+  react-native-tracking-transparency: b2029ff756f1128b1f2c7c7c7f3003bc3c950f9f
   react-native-webview: 0aa2cde4ee7e3e1c5fffdf64dbce9c709aa18155
   React-perflogger: 73732888d37d4f5065198727b167846743232882
   React-RCTActionSheet: 96c6d774fa89b1f7c59fc460adc3245ba2d7fd79
