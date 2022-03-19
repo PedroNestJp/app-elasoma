@@ -7,6 +7,7 @@ import Button from '../../components/Buttons/Button';
 import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import StateSelector from './StateSelector';
+import SegmentSelector from './SegmentSelector';
 import CitySelector from './CitySelector';
 import SwitchForm from '../../components/Form/SwitchForm';
 import MaskedInput from '../../components/MaskedInput';
@@ -78,6 +79,19 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.cellphone}</Text>
             ) : null}
           </FormItem>
+
+          <FormItem>
+            <SegmentSelector
+              selected={values.segment}
+              onValueChange={e => {
+                setFieldValue('segment', e);
+              }}
+            />
+            {errors.state ? (
+              <Text style={{color: 'red'}}>{errors.state}</Text>
+            ) : null}
+          </FormItem>    
+
           <FormItem>
             <StateSelector
               selected={values.state}
