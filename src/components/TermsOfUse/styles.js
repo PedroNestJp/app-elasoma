@@ -10,7 +10,12 @@ export const Scroll = styled.ScrollView`
 `;
 
 export const Touchable = styled.TouchableOpacity`
-  margin-top: 47px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+
+  justify-content: center;
+  margin-top: 18px;
 `;
 
 export const Title = styled.Text`
