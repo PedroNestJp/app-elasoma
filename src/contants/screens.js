@@ -5,6 +5,7 @@ export const Screens = {
     USER_PROFILE_SCREEN: 'UserProfileScreen',
     HOME_SCREEN: 'Home',
     EDIT_PROFILE_SCREEN: 'EditProfileScreen',
+    TERMS_AND_CONDITIONS_SCREEN: 'TermsAndConditionsScreen',
   },
   NEWS: {
     navigator: 'News',

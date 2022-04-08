@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/es/integration/react';
 import ThemeProvider from './config/ThemeProvider';
 import {persistor, store} from './redux/configureStore';
-import Routes from './routes/auth';
+import RoutesAuth from './routes/auth';
 import StatusBar from './components/StatusBar';
 import SplashScreen from './screens/auth/SplashScreen';
 import {
@@ -37,7 +37,7 @@ const App = () => {
           }}>
           <ThemeProvider>
             <StatusBar />
-            <Routes />
+            <RoutesAuth />
           </ThemeProvider>
         </MenuProvider>
       </PersistGate>

@@ -12,6 +12,7 @@ import {RegistrationSchema} from '../contants/formSchemas';
 import {userHasInterests} from '../helpers/store';
 import InterestsScreen from '../screens/news/InterestsScreen';
 import Loading from '../components/Loading';
+import TermsOfUse from '../components/TermsOfUse';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +32,9 @@ export default ({navigation}) => {
     isLoadingRegistration(false);
   };
 
-  if (loadingRegistration) return <Loading />;
+  if (loadingRegistration) {
+    return <Loading />;
+  }
 
   if (!registrationValid) {
     return (
@@ -101,6 +104,11 @@ export default ({navigation}) => {
         options={{headerShown: false}}
         name="TermsAndConditionsScreen"
         component={TermsAndConditionsScreen}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="TermsOfUse"
+        component={TermsOfUse}
       />
     </Stack.Navigator>
   );

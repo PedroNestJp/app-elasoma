@@ -1,21 +1,30 @@
-import React, {Fragment, useContext} from 'react';
+import React, {useState, Fragment, useContext} from 'react';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
+import CheckBox from '@react-native-community/checkbox';
+import {Formik} from 'formik';
+import {ThemeContext} from 'styled-components';
+import {useNavigation} from '@react-navigation/native';
+import {Screens} from '../../contants/screens';
+
 import {RegistrationSchema} from '../../contants/formSchemas';
+
 import FormItem from '../../components/Form/FormItem';
 import Input from '../../components/Input';
 import Text from '../../components/Typography/Text';
 import Button from '../../components/Buttons/Button';
-import {Formik} from 'formik';
-import {useSelector} from 'react-redux';
+import SwitchForm from '../../components/Form/SwitchForm';
+import MaskedInput from '../../components/MaskedInput';
+
 import StateSelector from './StateSelector';
 import SegmentSelector from './SegmentSelector';
 import CitySelector from './CitySelector';
-import SwitchForm from '../../components/Form/SwitchForm';
-import MaskedInput from '../../components/MaskedInput';
-import {ThemeContext} from 'styled-components';
 
-export default ({onSubmit, loading, SendButton}) => {
+export default ({onSubmit, loading}) => {
   const themeContext = useContext(ThemeContext);
   const {user} = useSelector(state => state.auth);
+  const navigation = useNavigation();
+
   const canEditCpf = !user.cpf;
 
   return (
@@ -47,9 +56,16 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.name}</Text>
             ) : null}
           </FormItem>
+
           <FormItem>
-            <Input style={{color: themeContext.drawer.textProfileColor}} editable={false} placeholder="Email" value={values.email} />
+            <Input
+              style={{color: themeContext.drawer.textProfileColor}}
+              editable={false}
+              placeholder="Email"
+              value={values.email}
+            />
           </FormItem>
+
           <FormItem>
             <MaskedInput
               mask={'[000].[000].[000]-[00]'}
@@ -65,6 +81,7 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.cpf}</Text>
             ) : null}
           </FormItem>
+
           <FormItem>
             <MaskedInput
               mask={'([00]) [00000]-[0000]'}
@@ -90,7 +107,7 @@ export default ({onSubmit, loading, SendButton}) => {
             {errors.state ? (
               <Text style={{color: 'red'}}>{errors.state}</Text>
             ) : null}
-          </FormItem>    
+          </FormItem>
 
           <FormItem>
             <StateSelector
@@ -114,6 +131,7 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.state}</Text>
             ) : null}
           </FormItem>
+
           <FormItem>
             <MaskedInput
               mask={'[00].[000].[000]/[0000]-[00]'}
@@ -128,6 +146,7 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.cnpj}</Text>
             ) : null}
           </FormItem>
+
           <FormItem>
             <Input
               placeholder="Empresa"
@@ -140,6 +159,7 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.business}</Text>
             ) : null}
           </FormItem>
+
           <FormItem>
             <MaskedInput
               mask={'([00]) [00000]-[0000]'}
@@ -191,6 +211,7 @@ export default ({onSubmit, loading, SendButton}) => {
               <Text style={{color: 'red'}}>{errors.employees}</Text>
             ) : null}
           </FormItem>
+
           <FormItem>
             <Input
               keyboardType="decimal-pad"
@@ -240,10 +261,34 @@ export default ({onSubmit, loading, SendButton}) => {
               value={values.aboutMe}
             />
           </FormItem>
+
+          <FormItem>
+            <View style={styles.row}>
+              <CheckBox
+                disabled={false}
+                value={values.terms}
+                onValueChange={newValue => setFieldValue('terms', newValue)}
+                tintColors={{
+                  false: themeContext.input.switch.darkMode,
+                  true: themeContext.input.switch.lightMode,
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
+                <Text style={styles.text}>
+                  Eu li e concordo com os termos de uso
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {errors.terms ? (
+              <Text style={{color: 'red'}}>{errors.terms}</Text>
+            ) : null}
+          </FormItem>
+
           <FormItem>
             <Button
               loading={loading}
-              onPress={handleSubmit} 
+              onPress={handleSubmit}
               size="large"
               disabled={loading}
               text="Enviar"
@@ -274,3 +319,14 @@ function formatReal(int) {
 
   return `R$ ${tmp}`;
 }
+
+const styles = StyleSheet.create({
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  text: {
+    marginLeft: 8,
+    textDecorationLine: 'underline',
+  },
+});
