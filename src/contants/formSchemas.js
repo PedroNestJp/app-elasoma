@@ -11,6 +11,7 @@ export const RegistrationSchema = Yup.object().shape({
     .required('Insira o Telefone'),
   state: Yup.string().required('Insira o estado'),
   business: Yup.string().required('Insira o nome da empresa'),
+  terms: Yup.boolean().required('Termos de uso obrigatório'),
 });
 
 export const SignInSchema = Yup.object().shape({

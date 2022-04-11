@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Modal, View} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 import Header from '../../containers/Header';
 import {Screens} from '../../contants/screens';
@@ -14,6 +15,7 @@ import HighlightsNews from '../../containers/news/HighlightsNews';
 import SectionTitle from '../../containers/news/SectionTitle';
 import CupIcon from '../../components/Icons/CupIcon';
 import {catchError} from '../../helpers/errors';
+import TermsOfUse from '../../components/TermsOfUse';
 
 const NEWS_LIMIT = 5;
 
@@ -21,9 +23,17 @@ export default ({navigation}) => {
   const [loadingNews, setLoadingNews] = useState(false);
   const [news, setNews] = useState(null);
   const [highlights, setHighlights] = useState(null);
+  const [modalTerms, setModalTerms] = useState(false);
 
   const [startAfter, setStartAfter] = useState(null);
   const {user} = useSelector(state => state.auth);
+  const {terms} = user;
+
+  useEffect(() => {
+    if (terms === false) {
+      setModalTerms(true);
+    }
+  }, []);
 
   useEffect(() => {
     getNewsAndHighlights();
@@ -130,6 +140,10 @@ export default ({navigation}) => {
     </ViewContainer>
   );
 
+  const handleCloseSelectCategoryModal = () => {
+    setModalTerms(false);
+  };
+
   return (
     <>
       <Header />
@@ -157,6 +171,13 @@ export default ({navigation}) => {
             />
           )}
         />
+
+        <Modal animationType="fade" visible={modalTerms}>
+          <TermsOfUse
+            dataUser={user}
+            closeModal={handleCloseSelectCategoryModal}
+          />
+        </Modal>
       </ViewContainer>
     </>
   );
