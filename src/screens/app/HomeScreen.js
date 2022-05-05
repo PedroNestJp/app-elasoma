@@ -29,6 +29,8 @@ export default ({navigation}) => {
   const {user} = useSelector(state => state.auth);
   const {terms} = user;
 
+  console.log(modalTerms, 'State Modal');
+
   useEffect(() => {
     if (terms === false) {
       setModalTerms(true);
@@ -173,10 +175,7 @@ export default ({navigation}) => {
         />
 
         <Modal animationType="fade" visible={modalTerms}>
-          <TermsOfUse
-            dataUser={user}
-            closeModal={handleCloseSelectCategoryModal}
-          />
+          <TermsOfUse closeModal={handleCloseSelectCategoryModal} />
         </Modal>
       </ViewContainer>
     </>

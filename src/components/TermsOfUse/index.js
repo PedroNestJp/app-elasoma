@@ -1,7 +1,9 @@
 import React from 'react';
+import {View, TouchableOpacity} from 'react-native';
+import BackButtonArea from '../Containers/BackButtonArea';
+import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../Icons/BackIcon';
 import Button from '../../components/Buttons/Button';
-import firestore from '@react-native-firebase/firestore';
 
 import {
   Container,
@@ -12,19 +14,8 @@ import {
   ContentButton,
 } from './styles';
 
-const TermsOfUse = ({closeModal, dataUser}) => {
-  const handleUpdateTermsUser = async () => {
-    const {id} = dataUser;
-
-    await firestore()
-      .collection('users')
-      .doc(id)
-      .update({
-        terms: true,
-      });
-
-    closeModal();
-  };
+const TermsOfUse = ({closeModal}) => {
+  const navigation = useNavigation();
 
   return (
     <Container>
@@ -91,7 +82,7 @@ const TermsOfUse = ({closeModal, dataUser}) => {
 
         <ContentButton>
           <Button
-            onPress={() => handleUpdateTermsUser()}
+            onPress={() => {}}
             size="large"
             fontBold
             //  disabled={loading}
