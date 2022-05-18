@@ -11,7 +11,7 @@ import {showToastError, showToastSuccess} from '../../helpers/notifications';
 export default () => {
   const user = getUserFromStore();
   const [isSubscribedToNewsletter, subscribeNewsletter] = useState(
-    user.isSubscribedToNewsletter || false,
+    !user.isSubscribedToNewsletter || false,
   );
 
   const handleNewsletterSubscription = async isSubscribedToNewsletter => {

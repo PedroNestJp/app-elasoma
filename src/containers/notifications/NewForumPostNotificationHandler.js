@@ -36,7 +36,7 @@ export default () => {
       `${STORAGE_PREFIX}NewForumPostsNotifications`,
     );
 
-    setNewForumPostNotifications(eventsNotificationState === 'true');
+    setNewForumPostNotifications(eventsNotificationState !== 'true');
   };
 
   const handleEventsNotifications = async notificationState => {

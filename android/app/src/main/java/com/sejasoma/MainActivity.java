@@ -1,4 +1,4 @@
-package com.elasoma;
+package com.ela_soma;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

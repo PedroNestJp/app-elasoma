@@ -34,7 +34,8 @@ const CustomButtonText = styled(Text)`
   font-size: 15px;
   line-height: ${props => (props.size === 'large' ? '32px' : '25px')};
   font-weight: ${props => (props.weight ? props.weight : '900')};
-  font-family: Poppins-Regular;
+  font-family: ${props =>
+    props.fontBold ? 'Poppins-Bold ' : 'Poppins-Regular'};
   font-style: normal;
 `;
 
@@ -49,6 +50,7 @@ export default ({
   style,
   text,
   IconComp,
+  fontBold,
 }) => {
   const themeContext = useContext(ThemeContext);
 
@@ -69,10 +71,14 @@ export default ({
           )}
         </View>
         <CustomButtonText
-          style={[{padding: paddingSize[size]}, textColor?{color: textColor}:{}]}
+          style={[
+            {padding: paddingSize[size]},
+            textColor ? {color: textColor} : {},
+          ]}
           size={size}
           weight={weight}
-          disabled={disabled}>
+          disabled={disabled}
+          fontBold={fontBold}>
           {text}
         </CustomButtonText>
         {IconComp && (
