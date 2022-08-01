@@ -29,8 +29,6 @@ export default ({navigation}) => {
   const {user} = useSelector(state => state.auth);
   const {terms} = user;
 
-  console.log(modalTerms, 'State Modal');
-
   useEffect(() => {
     if (terms === false) {
       setModalTerms(true);
@@ -54,6 +52,7 @@ export default ({navigation}) => {
     const request = await getUserNewsService({
       filters: {highlight: true},
     });
+
     setHighlights(request?.news);
   };
 
@@ -65,6 +64,7 @@ export default ({navigation}) => {
         startAfter: null,
         filters: {highlight: false},
       });
+
       setNews(request?.news);
       setStartAfter(request?.lastOne);
       setLoadingNews(false);
@@ -82,11 +82,13 @@ export default ({navigation}) => {
     try {
       if (startAfter) {
         setLoadingNews(true);
+
         const request = await getUserNewsService({
           limit: NEWS_LIMIT,
           startAfter,
           filters: {highlight: false},
         });
+
         setNews(news.concat(request?.news));
         setStartAfter(request?.lastOne);
         setLoadingNews(false);
@@ -113,14 +115,18 @@ export default ({navigation}) => {
       <Text size={15} fontStyle={600}>
         Não temos nenhuma notícia para exibir.
       </Text>
+
       <Text>
         As notícias exibidas são baseadas no seu estado e em suas áreas de
         interesse.
       </Text>
+
       <Text style={{paddingTop: 24}} fontStyle={600}>
         Tente:
       </Text>
+
       <TextButton onPress={getUserNews} underline text="Recarregar" />
+
       <TextButton
         onPress={() =>
           navigation.push(Screens.NEWS.navigator, {
@@ -130,6 +136,7 @@ export default ({navigation}) => {
         underline
         text="Atualizar Áreas de Interesse"
       />
+
       <TextButton
         onPress={() =>
           navigation.push(Screens.APP.navigator, {
@@ -149,6 +156,7 @@ export default ({navigation}) => {
   return (
     <>
       <Header />
+
       <ViewContainer noPaddingHorizontal loading={!news}>
         <FlatList
           data={news}

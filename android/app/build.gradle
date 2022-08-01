@@ -180,8 +180,8 @@ android {
         applicationId "com.ela_soma"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName getVersionName()
+        versionCode 4
+        versionName '1.2'
         aaptOptions{
             noCompress "tflite","model"
         }

@@ -19,8 +19,11 @@ export const getUserNewsService = async ({
       .where('highlight', '==', highlight || false)
       .orderBy('createdAt', 'desc');
 
-    if (startAfter) newsRef = newsRef.startAfter(startAfter).limit(limit);
-    else if (limit) newsRef = newsRef.limit(limit);
+    if (startAfter) {
+      newsRef = newsRef.startAfter(startAfter).limit(limit);
+    } else if (limit) {
+      newsRef = newsRef.limit(limit);
+    }
 
     const news = await newsRef.get();
 
@@ -44,8 +47,11 @@ export const getNewsByCategoryAndState = async (
     .where('state', '==', user.state)
     .orderBy(orderBy, orderDirection);
 
-  if (startAfter) newsRef = newsRef.startAfter(startAfter).limit(limit);
-  else newsRef = newsRef.limit(limit);
+  if (startAfter) {
+    newsRef = newsRef.startAfter(startAfter).limit(limit);
+  } else {
+    newsRef = newsRef.limit(limit);
+  }
 
   const news = await newsRef.get();
 
