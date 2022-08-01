@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.elasoma">
+    package="com.ela_soma">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -12,7 +12,7 @@
 
     <application
             android:largeHeap="true"
-            android:name="com.elasoma.MainApplication"
+            android:name="com.ela_soma.MainApplication"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -27,7 +27,7 @@
                 android:resource="@drawable/ic_stat_soma" />
 
         <activity
-                android:name="com.elasoma.MainActivity"
+                android:name="com.ela_soma.MainActivity"
                 android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
                 android:label="@string/app_name"
                 android:launchMode="singleTask"

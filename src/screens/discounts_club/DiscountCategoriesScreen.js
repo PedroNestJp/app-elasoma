@@ -111,6 +111,7 @@ export default ({navigation}) => {
         <CategoryFilter />
         <StateFilter />
       </View>
+
       <ViewContainer noPaddingHorizontal loading={loadingDiscounts}>
         <FlatList
           ListEmptyComponent={() => (

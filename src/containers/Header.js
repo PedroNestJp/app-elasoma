@@ -33,6 +33,7 @@ export default () => {
       <TouchableOpacity onPress={navigation.toggleDrawer}>
         <UserPicture />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() =>
           navigation.navigate(Screens.APP.navigator, {
@@ -42,6 +43,7 @@ export default () => {
         style={styles.brandContainer}>
         <Brand height={34} />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => dispatch(AppConfigActions.toggleRightDrawer())}>
         <MenuIcon />

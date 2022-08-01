@@ -177,11 +177,11 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.elasoma"
+        applicationId "com.ela_soma"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode getVersionCode()
-        versionName getVersionName()
+        versionCode 4
+        versionName '1.2'
         aaptOptions{
             noCompress "tflite","model"
         }
