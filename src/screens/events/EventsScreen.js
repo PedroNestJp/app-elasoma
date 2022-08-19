@@ -86,6 +86,7 @@ export default ({navigation}) => {
   return (
     <>
       <Header />
+
       <ViewContainer noPaddingHorizontal loading={loadingEvents}>
         {!loadingEvents && (
           <FlatList
