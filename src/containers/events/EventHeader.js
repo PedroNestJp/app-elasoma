@@ -56,15 +56,19 @@ export default ({event, showDate, textContainerStyle}) => {
         }}
         source={{uri: event.image}}
       />
+
       <TextContainer style={textContainerStyle}>
         {event.happened && (
           <View style={{marginVertical: 10}}>
             <Chip text="EVENTO REALIZADO" />
           </View>
         )}
+
         <CarouselTitle>{event.title}</CarouselTitle>
+
         {showDate ? <CarouselDate>{date}</CarouselDate> : null}
       </TextContainer>
+
       <ImageOverlay
         style={{
           width: Dimensions.get('window').width,

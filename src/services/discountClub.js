@@ -17,7 +17,7 @@ export const getSingleCategory = async categoryId => {
 export const getDiscountClubCategoriesByStateService = async selectedState => {
   const data = await firestore
     .collection(DISCOUNTS_CLUB_CATEGORY_URL)
-    .where(`quantity_per_state.${selectedState}`, '>', 0)
+    .where(`quantity_per_state.${selectedState}`, '>=', 0)
     .orderBy(`quantity_per_state.${selectedState}`, 'asc')
     .get();
 
@@ -35,8 +35,11 @@ export const getDiscountsByStateAndCategory = async (stateId, categoryId) => {
       .where('disabled', '==', false)
       .orderBy('createdAt', 'desc')
       .get();
+
     const discounts = [];
     data.forEach(item => discounts.push({id: item.id, ...item.data()}));
+
+    console.log(discounts, 'CLUBE BENEFICIOS');
     return discounts;
   } catch (e) {
     console.log(

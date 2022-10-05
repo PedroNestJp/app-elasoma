@@ -52,7 +52,7 @@ export const CustomDrawerComp = props => {
       contentContainerStyle={styles.container}>
       <View style={{flexGrow: 2}}>
         <CloseDrawer navigate={jumpTo} />
-        <UserProfile/>
+        <UserProfile />
         <DrawerItem
           label="Início"
           hasBottomDivider
@@ -60,6 +60,17 @@ export const CustomDrawerComp = props => {
             navigate(Screens.APP.navigator, {screen: Screens.APP.HOME_SCREEN})
           }
         />
+
+        <DrawerItem
+          label="Conta"
+          hasBottomDivider
+          onPress={() =>
+            navigate(Screens.APP.navigator, {
+              screen: Screens.APP.USER_PROFILE_SCREEN,
+            })
+          }
+        />
+
         <DrawerItem
           label="Editar Perfil"
           hasBottomDivider
