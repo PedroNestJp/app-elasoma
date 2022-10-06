@@ -66,6 +66,7 @@ export default ({navigation}) => {
                   <Text style={{color: 'red'}}>{errors.email}</Text>
                 ) : null}
               </FormItem>
+
               <FormItem>
                 <Input
                   validate={false}
@@ -79,6 +80,7 @@ export default ({navigation}) => {
                   <Text style={{color: 'red'}}>{errors.password}</Text>
                 ) : null}
               </FormItem>
+
               <View style={styles.formInput}>
                 <Button
                   disabled={loading}
@@ -92,6 +94,7 @@ export default ({navigation}) => {
           )}
         </Formik>
       </View>
+
       <View style={styles.footerTextContainer}>
         <TextButton
           underline

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import Loading from '../Loading';
 import BackButtonArea from './BackButtonArea';
 
-const CustomSafeAreaView = styled(View)`
+const CustomSafeAreaView = styled(SafeAreaView)`
   background-color: ${props => props.theme.containerBackground};
   flex: 1;
 `;

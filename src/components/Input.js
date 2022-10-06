@@ -62,6 +62,7 @@ export default ({
         placeholder={placeholder}
         onChangeText={text => onChangeText(text)}
         clearButtonMode={clearButtonMode}
+        autoCapitalize="none"
         {...props}
       />
       {IconComponent && (

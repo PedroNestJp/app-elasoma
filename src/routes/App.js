@@ -3,6 +3,7 @@ import HomeScreen from '../screens/app/HomeScreen';
 import AboutScreen from '../screens/app/AboutScreen';
 import EditProfileScreen from '../screens/app/EditProfileScreen';
 import UserProfileScreen from '../screens/app/UserProfileScreen';
+import DeleteAccountScreen from '../screens/app/DeleteAccountScreen';
 import TermsAndConditionsScreen from '../screens/app/TermsAndConditionsScreen';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {Screens} from '../contants/screens';
@@ -99,6 +100,11 @@ export default ({navigation}) => {
         options={{headerShown: false}}
         name="UserProfileScreen"
         component={UserProfileScreen}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="DeleteAccountScreen"
+        component={DeleteAccountScreen}
       />
       <Stack.Screen
         options={{headerShown: false}}

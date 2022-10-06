@@ -3,6 +3,7 @@ export const Screens = {
     navigator: 'App',
     REGISTER_SCREEN: 'RegisterScreen',
     USER_PROFILE_SCREEN: 'UserProfileScreen',
+    DELETE_ACCOUNT_SCREEN: 'DeleteAccountScreen',
     HOME_SCREEN: 'Home',
     EDIT_PROFILE_SCREEN: 'EditProfileScreen',
     TERMS_AND_CONDITIONS_SCREEN: 'TermsAndConditionsScreen',

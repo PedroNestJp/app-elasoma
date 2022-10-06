@@ -63,6 +63,7 @@ export default ({onSubmit, loading}) => {
               editable={false}
               placeholder="Email"
               value={values.email}
+              autoCapitalize="none"
             />
           </FormItem>
 
