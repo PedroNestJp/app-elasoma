@@ -131,7 +131,7 @@ const InvertThemeOption = () => {
   const dispatch = useDispatch();
   const {theme} = useSelector(state => state.appConfig);
 
-  const label = theme === 'light' ? 'Modo Escuro' : 'Modo Claro';
+  const label = theme === 'light' ? 'Modo Claro' : 'Modo Escuro';
   return (
     <View style={styles.invertThemeContainer}>
       <TextButton

@@ -218,24 +218,24 @@ PODS:
   - AppAuth/Core (1.5.0)
   - AppAuth/ExternalUserAgent (1.5.0):
     - AppAuth/Core
-  - appcenter-analytics (4.3.0):
+  - appcenter-analytics (4.4.4):
     - AppCenter/Analytics (~> 4.0)
     - AppCenterReactNativeShared (~> 4.0)
     - React-Core
-  - appcenter-core (4.3.0):
+  - appcenter-core (4.4.4):
     - AppCenterReactNativeShared (~> 4.0)
     - React-Core
-  - appcenter-crashes (4.3.0):
+  - appcenter-crashes (4.4.4):
     - AppCenter/Crashes (~> 4.0)
     - AppCenterReactNativeShared (~> 4.0)
     - React-Core
-  - AppCenter/Analytics (4.4.2):
+  - AppCenter/Analytics (4.4.3):
     - AppCenter/Core
-  - AppCenter/Core (4.4.2)
-  - AppCenter/Crashes (4.4.2):
+  - AppCenter/Core (4.4.3)
+  - AppCenter/Crashes (4.4.3):
     - AppCenter/Core
-  - AppCenterReactNativeShared (4.4.4):
-    - AppCenter/Core (= 4.4.2)
+  - AppCenterReactNativeShared (4.4.5):
+    - AppCenter/Core (= 4.4.3)
   - Base64 (1.1.2)
   - boost (1.76.0)
   - BoringSSL-GRPC (0.0.7):
@@ -1094,11 +1094,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
-  AppCenter: b0eca112a27b71e97488ffa1949ee38c7abd4b79
-  appcenter-analytics: 2a8a55d2feba193c3c8a51b9902ef4757386414e
-  appcenter-core: 0293b8aeee457a25b44323a311de49c29d9defa7
-  appcenter-crashes: ad135405e148a9ed1c8bd169a9d2ea7bbaecd34c
-  AppCenterReactNativeShared: 0906af7a6bf95075d6c607189820a2e81fceb6fe
+  AppCenter: 3fd04aa1b166e16fdb03ec81dabe488aece83fbd
+  appcenter-analytics: 4403fa85b98266f0672aa3676cb0416755ce2ff6
+  appcenter-core: 9b90e7b8581598cf4f61d2efe41581cc69631da8
+  appcenter-crashes: 02e9432ed23579e258af9742356d74271539fb85
+  AppCenterReactNativeShared: f395caeabde0dc3a11609dbcb737d0f14cd40e79
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
@@ -1203,6 +1203,6 @@ SPEC CHECKSUMS:
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: c2035ddfcb21724fd89eaf0128700624fb891fa8
+PODFILE CHECKSUM: eb9eef393228821f4408ca11d8e3370ec505e3e4
 
 COCOAPODS: 1.11.3
