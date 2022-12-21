@@ -5,12 +5,14 @@
   "scripts": {
     "start": "NODE_ENV=development react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator=\"iPhone 13 (15.4)\"",
+    "ios": "react-native run-ios ",
     "build:apk": "cd android && ./gradlew assembleRelease",
     "test": "jest",
     "prepare": "patch-package",
     "codepush-android": "appcenter codepush release-react -a brunno.hofmann-gmail.com/Seja-Soma-Android -d Production",
-    "fix_ios_images": "npx react-native-fix-image"
+    "fix_ios_images": "npx react-native-fix-image",
+    "resetPodsforIntel": "cd ios && pod deintegrate && pod cache clean --all && pod install"
+
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^1.1.1",

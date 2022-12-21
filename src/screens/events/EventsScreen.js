@@ -69,11 +69,14 @@ export default ({navigation}) => {
   };
 
   const ScreenHeader = () => (
-    <ViewContainer noPaddingHorizontal loading={loadingSpotlights}>
+    <ViewContainer
+      noPaddingHorizontal
+      loading={loadingSpotlights}
+      style={{marginVertical: 10}}>
       {!loadingSpotlights && spotlights && spotlights.length > 0 && (
         <SpotlightCarrousel navigation={navigation} spotlights={spotlights} />
       )}
-      <View style={{paddingBottom: 24, paddingTop: 12}}>
+      <View style={{height: 40}}>
         <EventsFilters
           onSelectFilter={setFilter}
           onSelectState={filterByState}
@@ -89,15 +92,23 @@ export default ({navigation}) => {
 
       <ViewContainer noPaddingHorizontal loading={loadingEvents}>
         {!loadingEvents && (
-          <FlatList
-            ListHeaderComponent={<ScreenHeader />}
-            ListEmptyComponent={() => (
-              <Text style={{padding: 24}}>Nenhum resultado foi encontrado</Text>
-            )}
-            data={events}
-            renderItem={({item}) => <EventCard key={item.id} event={item} />}
-            keyExtractor={item => item.id}
-          />
+          <>
+            <ScreenHeader />
+            <View style={{height: '85%'}}>
+              <FlatList
+                ListEmptyComponent={() => (
+                  <Text style={{padding: 24}}>
+                    Nenhum resultado foi encontrado
+                  </Text>
+                )}
+                data={events}
+                renderItem={({item}) => (
+                  <EventCard key={item.id} event={item} />
+                )}
+                keyExtractor={item => item.id}
+              />
+            </View>
+          </>
         )}
       </ViewContainer>
     </>
