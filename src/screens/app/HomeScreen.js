@@ -182,9 +182,9 @@ export default ({navigation}) => {
           )}
         />
 
-        <Modal animationType="fade" visible={modalTerms}>
+        {/* <Modal animationType="fade" visible={modalTerms}>
           <TermsOfUse closeModal={handleCloseSelectCategoryModal} />
-        </Modal>
+        </Modal> */}
       </ViewContainer>
     </>
   );

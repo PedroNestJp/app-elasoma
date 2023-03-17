@@ -24,11 +24,11 @@ export default ({navigation}) => (
       </Text>
     </View>
     <View style={styles.footerTextContainer}>
-      <TextButton
+      {/* <TextButton
         underline
         onPress={() => navigation.navigate('TermsAndConditionsScreen')}
         text="Termos e Condições de Uso"
-      />
+      /> */}
     </View>
   </ScrollContainer>
 );
