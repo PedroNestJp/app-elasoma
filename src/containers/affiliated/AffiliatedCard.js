@@ -26,6 +26,11 @@ const PersonBusiness = styled(Text)`
   font-size: 14px;
   line-height: 28px;
 `;
+const PersonCounselor = styled(Text)`
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 28px;
+`;
 
 export default ({person}) => {
   const openYoutubeVideo = () => {
@@ -43,6 +48,7 @@ export default ({person}) => {
       <View style={{flexShrink: 1}}>
         <PersonName>{person.name}</PersonName>
         <PersonBusiness>{person.business}</PersonBusiness>
+        <PersonCounselor>{person.counselor}</PersonCounselor>
         {person.youtube_video ? (
           <TextButton
             onPress={openYoutubeVideo}
