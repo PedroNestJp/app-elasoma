@@ -146,7 +146,7 @@ def getVersionCode = { ->
         }
     }
 
-    return 1 // default
+    return 7 // default
 }
 
 def getVersionName = { ->
@@ -168,7 +168,7 @@ def getVersionName = { ->
         }
     }
 
-    return '1' // default
+    return '1.5' // default
 }
 
 android {
@@ -180,8 +180,8 @@ android {
         applicationId "com.ela_soma"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName '1.4'
+        versionCode 7
+        versionName '1.5'
         aaptOptions{
             noCompress "tflite","model"
         }
@@ -224,9 +224,10 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
