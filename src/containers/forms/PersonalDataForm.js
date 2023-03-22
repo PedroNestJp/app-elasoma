@@ -275,9 +275,10 @@ export default ({onSubmit, loading}) => {
                 }}
               />
               <TouchableOpacity
-                onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
+                // onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
+                onPress={() => {}}>
                 <Text style={styles.text}>
-                  Eu li e concordo com os termos de uso
+                Concordo com o compartilhamento das minhas informações com a ElaSoma
                 </Text>
               </TouchableOpacity>
             </View>
