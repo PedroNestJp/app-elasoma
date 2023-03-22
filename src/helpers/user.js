@@ -10,6 +10,7 @@ export const userToObject = user => ({
   state: user.state,
   stateData: user.stateData,
   stateUf: user.stateUf,
+  counselor: user.counselor,
 });
 
 export const removeUserFromArrayOfUsersObjects = (user, array) =>
