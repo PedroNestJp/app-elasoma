@@ -1,7 +1,7 @@
-import React, {useContext, useEffect} from 'react';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {useSelector} from 'react-redux';
+import React, { useContext, useEffect } from 'react';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import SplashScreen from '../screens/auth/SplashScreen';
 import SignInScreen from '../screens/auth/SignInScreen';
 import LinkSocial from '../screens/auth/LinkSocial';
@@ -10,17 +10,17 @@ import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import TermsAndConditionsScreen from '../screens/app/TermsAndConditionsScreen';
 
 import RightDrawer from './RightDrawer';
-import {getUserFromStore} from '../helpers/store';
+import { getUserFromStore } from '../helpers/store';
 import IsSuspendedScreen from '../screens/auth/IsSuspendedScreen';
-import {ThemeContext} from 'styled-components';
-import {isReadyRef, navigationRef} from './helpers';
-import {canUserAccessSystem} from '../services/users';
+import { ThemeContext } from 'styled-components';
+import { isReadyRef, navigationRef } from './helpers';
+import { canUserAccessSystem } from '../services/users';
 
 const Stack = createStackNavigator();
 
 export default () => {
-  const {isLoading, authenticated} = useSelector(state => state.auth);
-  const {theme} = useSelector(state => state.appConfig);
+  const { isLoading, authenticated } = useSelector(state => state.auth);
+  const { theme } = useSelector(state => state.appConfig);
   const themeContext = useContext(ThemeContext);
   const user = getUserFromStore();
 
@@ -47,7 +47,7 @@ export default () => {
       <Stack.Navigator>
         {isLoading && (
           <Stack.Screen
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
             name="Splash"
             component={SplashScreen}
           />
@@ -55,24 +55,24 @@ export default () => {
         {!authenticated && (
           <>
             <Stack.Screen
-              options={{headerShown: false}}
-              name="SignIn"
-              component={SignInScreen}
-            />
-            <Stack.Screen
-              options={{headerShown: false}}
-              name="LinkSocial"
-              component={LinkSocial}
-            />
-            <Stack.Screen
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
               name="LoginScreen"
               component={LoginScreen}
             />
             <Stack.Screen
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
               name="ForgotPasswordScreen"
               component={ForgotPasswordScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="SignIn"
+              component={SignInScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="LinkSocial"
+              component={LinkSocial}
             />
           </>
         )}
@@ -80,7 +80,7 @@ export default () => {
         {authenticated && !canUserAccessSystem() && (
           <>
             <Stack.Screen
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
               name="IsSuspendedScreen"
               component={IsSuspendedScreen}
             />
@@ -90,7 +90,7 @@ export default () => {
         {authenticated && !user.isSuspended && (
           <>
             <Stack.Screen
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
               name="RightDrawer"
               component={RightDrawer}
             />
@@ -98,7 +98,7 @@ export default () => {
         )}
 
         <Stack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name="TermsAndConditionsScreen"
           component={TermsAndConditionsScreen}
         />

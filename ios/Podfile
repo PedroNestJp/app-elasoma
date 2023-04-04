@@ -15,7 +15,6 @@ target 'soma' do
   pod 'GoogleSignIn', '~> 5.0.0'
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text', :modular_headers => true
 
-  pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
   pod 'boost', :podspec => '../node_modules/react-native/third-party-podspecs/boost.podspec'
 
 
