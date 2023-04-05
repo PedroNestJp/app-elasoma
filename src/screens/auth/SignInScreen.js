@@ -33,7 +33,7 @@ export default ({navigation}) => {
   };
 
   return (
-    <ScrollContainer>
+    <ScrollContainer canGoBack style={styles.container}>
       <View style={styles.brandContainer}>
         <Brand height={34} />
       </View>
@@ -93,14 +93,14 @@ export default ({navigation}) => {
       <View style={styles.socialNetworkLoginContainer}>
         <SocialNetworksLogin loading={loading} navigation={navigation} />
       </View>
-      <View style={styles.footerTextContainer}>
+      {/* <View style={styles.footerTextContainer}>
         <Text>Já possui uma conta?</Text>
         <TextButton
           underline
           text="Entre aqui."
           onPress={() => navigation.navigate('LoginScreen')}
         />
-      </View>
+      </View> */}
     </ScrollContainer>
   );
 };

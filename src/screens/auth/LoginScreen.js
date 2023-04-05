@@ -1,16 +1,18 @@
-import React, {Fragment, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { Fragment, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Input from '../../components/Input';
 import Text from '../../components/Typography/Text';
 import TextButton from '../../components/Buttons/TextButton';
 import FormItem from '../../components/Form/FormItem';
 import * as Yup from 'yup';
-import {Formik} from 'formik';
-import {loginWithEmailAndPassword} from '../../services/auth/email_password_auth';
-import {notifyError} from '../../helpers/notifications';
+import { Formik } from 'formik';
+import { loginWithEmailAndPassword } from '../../services/auth/email_password_auth';
+import { notifyError } from '../../helpers/notifications';
 import Button from '../../components/Buttons/Button';
 import ViewContainer from '../../components/Containers/ViewContainer';
 import ScrollContainer from '../../components/Containers/ScrollContainer';
+import Brand from '../../components/Brand';
+
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,7 +24,7 @@ const SignInSchema = Yup.object().shape({
     .required('Insira senha'),
 });
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const submitForm = async values => {
@@ -32,13 +34,16 @@ export default ({navigation}) => {
       navigation.replace('RegisterScreen');
       setLoading(false);
     } catch (e) {
-      notifyError({title: 'Houve um erro', key: e.code});
+      notifyError({ title: 'Houve um erro', key: e.code });
       setLoading(false);
     }
   };
 
   return (
-    <ScrollContainer canGoBack style={styles.container}>
+    <ScrollContainer>
+      <View style={styles.brandContainer}>
+        <Brand height={34} />
+      </View>
       <View>
         <Formik
           validationSchema={SignInSchema}
@@ -63,7 +68,7 @@ export default ({navigation}) => {
                   value={values.email}
                 />
                 {errors.email ? (
-                  <Text style={{color: 'red'}}>{errors.email}</Text>
+                  <Text style={{ color: 'red' }}>{errors.email}</Text>
                 ) : null}
               </FormItem>
 
@@ -77,7 +82,7 @@ export default ({navigation}) => {
                   secureTextEntry={true}
                 />
                 {errors.password ? (
-                  <Text style={{color: 'red'}}>{errors.password}</Text>
+                  <Text style={{ color: 'red' }}>{errors.password}</Text>
                 ) : null}
               </FormItem>
 
@@ -100,6 +105,11 @@ export default ({navigation}) => {
           underline
           onPress={() => navigation.navigate('ForgotPasswordScreen')}
           text="Esqueceu sua senha?"
+        />
+        <TextButton
+          underline
+          onPress={() => navigation.navigate('SignIn')}
+          text="Registre-se"
         />
       </View>
     </ScrollContainer>
