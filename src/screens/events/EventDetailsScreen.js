@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../containers/Header';
 import {
   createEventListenerService,
   updateEventService,
 } from '../../services/events';
 import ViewContainer from '../../components/Containers/ViewContainer';
-import {ScrollView, TouchableOpacity, View, Alert} from 'react-native';
+import { ScrollView, TouchableOpacity, View, Alert } from 'react-native';
 import styled from 'styled-components';
 import Text from '../../components/Typography/Text';
 import EventHeader from '../../containers/events/EventHeader';
 import Button from '../../components/Buttons/Button';
-import {firestoreTimeToMoment, formattedDate} from '../../helpers/common';
+import { firestoreTimeToMoment, formattedDate } from '../../helpers/common';
 import MapsStaticImage from '../../containers/events/MapsStaticImage';
-import {Screens} from '../../contants/screens';
-import {useNavigation} from '@react-navigation/native';
-import {getUserFromStore} from '../../helpers/store';
+import { Screens } from '../../contants/screens';
+import { useNavigation } from '@react-navigation/native';
+import { getUserFromStore } from '../../helpers/store';
 import UserPicture from '../../components/UserPicture';
 import TextButton from '../../components/Buttons/TextButton';
 import {
@@ -23,7 +23,8 @@ import {
   userToObject,
 } from '../../helpers/user';
 import EventGallery from '../../containers/events/EventGallery';
-import {catchError} from '../../helpers/errors';
+import { catchError } from '../../helpers/errors';
+import { Platform } from 'react-native';
 
 const ConfirmedPeopleContainer = styled(View)`
   display: flex;
@@ -69,7 +70,7 @@ const DescriptionText = styled(Text)`
   line-height: 22px;
 `;
 
-export default ({route}) => {
+export default ({ route }) => {
   const navigation = useNavigation();
   const [loading, isLoading] = useState(true);
   const [loadingConfirmButton, isLoadingConfirmButton] = useState(false);
@@ -82,7 +83,7 @@ export default ({route}) => {
   const userDeniedConfirmed =
     event && event.denied && event.denied.some(person => person.id === user.id);
 
-  const {id} = route.params;
+  const { id } = route.params;
 
   useEffect(() => {
     getEvent();
@@ -104,7 +105,7 @@ export default ({route}) => {
   const goToEventMapDetail = () => {
     navigation.push(Screens.EVENTS.navigator, {
       screen: Screens.EVENTS.EVENT_MAP_DETAILS_SCREEN,
-      params: {event},
+      params: { event },
     });
   };
 
@@ -145,7 +146,7 @@ export default ({route}) => {
       [
         {
           text: 'Não',
-          onPress: () => {},
+          onPress: () => { },
           style: 'cancel',
         },
         {
@@ -153,7 +154,7 @@ export default ({route}) => {
           onPress: confirmDeny,
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -178,14 +179,18 @@ export default ({route}) => {
   };
 
   const ConfirmedPeople = () => {
-    const {dateTime} = event;
+    const { dateTime } = event;
     const date = formattedDate(
       firestoreTimeToMoment(dateTime),
       'DD MMM - HH:mm',
     );
 
     return (
-      <ConfirmedPeopleContainer>
+      <ConfirmedPeopleContainer
+        style={
+          Platform.OS === 'ios' ? { marginTop: 60, alignItems: 'center' } : { marginTop: 30, alignItems: 'center' }
+        }
+      >
         <DateText>{date.toUpperCase()}</DateText>
         <EventConfirmedPeople people={event.confirmed} />
       </ConfirmedPeopleContainer>
@@ -196,10 +201,10 @@ export default ({route}) => {
     return event.happened
       ? 'Evento Encerrado'
       : userPresenceConfirmed
-      ? 'Remover Presença'
-      : userDeniedConfirmed
-      ? 'Não vou participar'
-      : 'Confirmar Presença';
+        ? 'Remover Presença'
+        : userDeniedConfirmed
+          ? 'Não vou participar'
+          : 'Confirmar Presença';
   };
 
   return (
@@ -208,15 +213,15 @@ export default ({route}) => {
       <ViewContainer noPaddingHorizontal loading={loading}>
         {event && (
           <ScrollView
-            scrollIndicatorInsets={{right: Number.MIN_VALUE}}
+            scrollIndicatorInsets={{ right: Number.MIN_VALUE }}
           >
-            <View style={{alignItems: 'center'}}>
+            <View style={{ alignItems: 'center' }}>
               <View>
                 <EventHeader event={event} />
               </View>
             </View>
 
-            <ViewContainer style={{paddingTop: 32, zIndex: 19}}>
+            <ViewContainer style={{ paddingTop: 32, zIndex: 19 }}>
               <View
                 style={{
                   zIndex: 20,
@@ -236,12 +241,12 @@ export default ({route}) => {
                   }
                   size="medium"
                   text={getMainButtonText()}
-                  style={{width: 200}}
+                  style={{ width: 200 }}
                 />
                 {!event.happened &&
                   !userDeniedConfirmed &&
                   !userPresenceConfirmed && (
-                    <View style={{marginTop: 15}}>
+                    <View style={{ marginTop: 15 }}>
                       <TextButton
                         onPress={denyPresence}
                         underline
@@ -250,14 +255,14 @@ export default ({route}) => {
                     </View>
                   )}
               </View>
-              <ConfirmedPeople />
+              <ConfirmedPeople style={{ marginTop: 15 }} />
             </ViewContainer>
             <EventGallery event={event} />
             <AddressContainer paddingVertical={12}>
               <PlaceText>{event.place}</PlaceText>
               <AddressText>{event.address}</AddressText>
             </AddressContainer>
-            <View style={{zIndex: 10}}>
+            <View style={{ zIndex: 10 }}>
               <TouchableOpacity onPress={goToEventMapDetail}>
                 <MapsStaticImage
                   height={160}
@@ -276,13 +281,13 @@ export default ({route}) => {
   );
 };
 
-const EventConfirmedPeople = ({people}) => {
+const EventConfirmedPeople = ({ people }) => {
   const navigation = useNavigation();
 
   const goToEventsConfirmedPeopleScreen = () => {
     navigation.push(Screens.EVENTS.navigator, {
       screen: Screens.EVENTS.EVENT_CONFIRMED_PEOPLE_SCREEN,
-      params: {people},
+      params: { people },
     });
   };
 
@@ -290,18 +295,18 @@ const EventConfirmedPeople = ({people}) => {
     const shown = people.slice(0, 3);
     return (
       <TouchableOpacity onPress={goToEventsConfirmedPeopleScreen}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {shown.map(show => (
             <UserPicture
               key={show.id}
-              style={{marginLeft: 4}}
+              style={{ marginLeft: 4 }}
               photoURL={show.photoURL}
               height={24}
               width={24}
             />
           ))}
           {people.length > 3 ? (
-            <Text style={{marginLeft: 4}}>
+            <Text style={{ marginLeft: 4 }}>
               {people.length > 0 && `+${people.length - 3}`}
             </Text>
           ) : null}
