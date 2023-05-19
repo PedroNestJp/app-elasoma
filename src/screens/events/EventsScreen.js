@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View, TouchableOpacity, Modal } from 'react-native';
 
-import {getUserFromStore} from '../../helpers/store';
+import { getUserFromStore } from '../../helpers/store';
 import ViewContainer from '../../components/Containers/ViewContainer';
 import Text from '../../components/Typography/Text';
 import Header from '../../containers/Header';
@@ -14,9 +14,64 @@ import SpotlightCarrousel from '../../containers/events/SpotlightCarrousel';
 import StateSelector from '../../containers/forms/StateSelector';
 import FilterIcon from '../../components/Icons/FilterIcon';
 import EventsFilterSelector from '../../containers/events/EventsFilterSelector';
-import {catchError} from '../../helpers/errors';
+import { catchError } from '../../helpers/errors';
 
-export default ({navigation}) => {
+const EventsFilters = ({ onSelectState, selectedState, onSelectFilter }) => {
+  const [collapsedFilterSelector, setCollapsedFilterSelector] = useState(true);
+
+  return (
+    <View>
+      <View
+        style={{
+          paddingHorizontal: 24,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <View style={{ flexGrow: 2 }}>
+          <StateSelector
+            onValueChange={onSelectState}
+            selected={selectedState}
+          />
+        </View>
+        <View style={{ marginLeft: 10, marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => setCollapsedFilterSelector(!collapsedFilterSelector)}>
+            <FilterIcon />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={!collapsedFilterSelector}
+        onRequestClose={() => {
+          setCollapsedFilterSelector(true);
+        }}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center', // para centralizar verticalmente
+          alignItems: 'center', // para centralizar horizontalmente
+          backgroundColor: 'rgba(0, 0, 0, 0.5)' // fundo semi-transparente
+        }}>
+          <View style={{
+            width: '80%', // para ocupar 80% da largura da tela
+            height: '40%', // para ocupar 50% da altura da tela
+            backgroundColor: '#21102E' // cor de fundo do modal
+          }}>
+            <EventsFilterSelector
+              onSelectFilter={onSelectFilter}
+              isCollapsed={collapsedFilterSelector}
+            />
+          </View>
+        </View>
+      </Modal>
+
+    </View>
+  );
+};
+
+export default ({ navigation }) => {
   const user = getUserFromStore();
 
   const [loadingEvents, setLoadingEvents] = useState(false);
@@ -72,11 +127,11 @@ export default ({navigation}) => {
     <ViewContainer
       noPaddingHorizontal
       loading={loadingSpotlights}
-      style={{marginVertical: 10}}>
+      style={{ marginVertical: 10 }}>
       {!loadingSpotlights && spotlights && spotlights.length > 0 && (
         <SpotlightCarrousel navigation={navigation} spotlights={spotlights} />
       )}
-      <View style={{height: 40}}>
+      <View style={{ height: 40 }}>
         <EventsFilters
           onSelectFilter={setFilter}
           onSelectState={filterByState}
@@ -94,15 +149,15 @@ export default ({navigation}) => {
         {!loadingEvents && (
           <>
             <ScreenHeader />
-            <View style={{height: '85%'}}>
+            <View style={{ height: '60%' }}>
               <FlatList
                 ListEmptyComponent={() => (
-                  <Text style={{padding: 24}}>
+                  <Text style={{ padding: 24 }}>
                     Nenhum resultado foi encontrado
                   </Text>
                 )}
                 data={events}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <EventCard key={item.id} event={item} />
                 )}
                 keyExtractor={item => item.id}
@@ -111,38 +166,11 @@ export default ({navigation}) => {
           </>
         )}
       </ViewContainer>
-    </>
-  );
-};
-
-const EventsFilters = ({onSelectState, selectedState, onSelectFilter}) => {
-  const [collapsedFilterSelector, isCollapsedFilterSelector] = useState(true);
-
-  return (
-    <View>
-      <View
-        style={{
-          paddingHorizontal: 24,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <View style={{flexGrow: 2}}>
-          <StateSelector
-            onValueChange={onSelectState}
-            selected={selectedState}
-          />
-        </View>
-        <View style={{marginLeft: 10, marginTop: 10}}>
-          <TouchableOpacity
-            onPress={() => isCollapsedFilterSelector(!collapsedFilterSelector)}>
-            <FilterIcon />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <EventsFilterSelector
-        onSelectFilter={onSelectFilter}
-        isCollapsed={collapsedFilterSelector}
+      <EventsFilters
+        onSelectState={filterByState}
+        selectedState={selectedState}
+        onSelectFilter={setFilter}
       />
-    </View>
+    </>
   );
 };

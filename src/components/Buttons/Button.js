@@ -31,7 +31,7 @@ const IconCompContainer = styled(View)`
 
 const CustomButtonText = styled(Text)`
   color: ${props => props.theme.primaryButtonColor};
-  font-size: 15px;
+  font-size: 18px;
   line-height: ${props => (props.size === 'large' ? '32px' : '25px')};
   font-weight: ${props => (props.weight ? props.weight : '900')};
   font-family: ${props =>

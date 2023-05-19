@@ -1,13 +1,13 @@
-import React, {useState, Fragment, useContext} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useState, Fragment, useContext } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
-import {Formik} from 'formik';
-import {ThemeContext} from 'styled-components';
-import {useNavigation} from '@react-navigation/native';
-import {Screens} from '../../contants/screens';
+import { Formik } from 'formik';
+import { ThemeContext } from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../../contants/screens';
 
-import {RegistrationSchema} from '../../contants/formSchemas';
+import { RegistrationSchema } from '../../contants/formSchemas';
 
 import FormItem from '../../components/Form/FormItem';
 import Input from '../../components/Input';
@@ -20,9 +20,9 @@ import StateSelector from './StateSelector';
 import SegmentSelector from './SegmentSelector';
 import CitySelector from './CitySelector';
 
-export default ({onSubmit, loading}) => {
+export default ({ onSubmit, loading }) => {
   const themeContext = useContext(ThemeContext);
-  const {user} = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.auth);
   const navigation = useNavigation();
 
   const canEditCpf = !user.cpf;
@@ -45,7 +45,7 @@ export default ({onSubmit, loading}) => {
         <Fragment>
           <FormItem>
             <Input
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               validate={false}
               placeholder="Nome Completo"
               onChangeText={handleChange('name')}
@@ -53,13 +53,13 @@ export default ({onSubmit, loading}) => {
               value={values.name}
             />
             {errors.name ? (
-              <Text style={{color: 'red'}}>{errors.name}</Text>
+              <Text style={{ color: 'red' }}>{errors.name}</Text>
             ) : null}
           </FormItem>
 
           <FormItem>
             <Input
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               editable={false}
               placeholder="Email"
               value={values.email}
@@ -74,12 +74,12 @@ export default ({onSubmit, loading}) => {
               keyboardType="decimal-pad"
               placeholder="Cpf"
               onChangeText={handleChange('cpf')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               onBlur={handleBlur('cpf')}
               value={values.cpf}
             />
             {errors.cpf ? (
-              <Text style={{color: 'red'}}>{errors.cpf}</Text>
+              <Text style={{ color: 'red' }}>{errors.cpf}</Text>
             ) : null}
           </FormItem>
 
@@ -90,11 +90,11 @@ export default ({onSubmit, loading}) => {
               placeholder="Celular"
               onChangeText={handleChange('cellphone')}
               onBlur={handleBlur('cellphone')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={values.cellphone}
             />
             {errors.cellphone ? (
-              <Text style={{color: 'red'}}>{errors.cellphone}</Text>
+              <Text style={{ color: 'red' }}>{errors.cellphone}</Text>
             ) : null}
           </FormItem>
 
@@ -106,7 +106,7 @@ export default ({onSubmit, loading}) => {
               }}
             />
             {errors.state ? (
-              <Text style={{color: 'red'}}>{errors.state}</Text>
+              <Text style={{ color: 'red' }}>{errors.state}</Text>
             ) : null}
           </FormItem>
 
@@ -118,7 +118,7 @@ export default ({onSubmit, loading}) => {
               }}
             />
             {errors.state ? (
-              <Text style={{color: 'red'}}>{errors.state}</Text>
+              <Text style={{ color: 'red' }}>{errors.state}</Text>
             ) : null}
           </FormItem>
 
@@ -129,7 +129,7 @@ export default ({onSubmit, loading}) => {
               onValueChange={handleChange('city')}
             />
             {errors.state ? (
-              <Text style={{color: 'red'}}>{errors.state}</Text>
+              <Text style={{ color: 'red' }}>{errors.state}</Text>
             ) : null}
           </FormItem>
 
@@ -140,11 +140,11 @@ export default ({onSubmit, loading}) => {
               placeholder="CNPJ"
               onChangeText={handleChange('cnpj')}
               onBlur={handleBlur('cnpj')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={values.cnpj}
             />
             {errors.cnpj ? (
-              <Text style={{color: 'red'}}>{errors.cnpj}</Text>
+              <Text style={{ color: 'red' }}>{errors.cnpj}</Text>
             ) : null}
           </FormItem>
 
@@ -153,11 +153,11 @@ export default ({onSubmit, loading}) => {
               placeholder="Empresa"
               onChangeText={handleChange('business')}
               onBlur={handleBlur('business')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={values.business}
             />
             {errors.business ? (
-              <Text style={{color: 'red'}}>{errors.business}</Text>
+              <Text style={{ color: 'red' }}>{errors.business}</Text>
             ) : null}
           </FormItem>
 
@@ -168,16 +168,16 @@ export default ({onSubmit, loading}) => {
               placeholder="Whatsapp"
               onChangeText={handleChange('phone')}
               onBlur={handleBlur('phone')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={values.phone}
             />
             {errors.phone ? (
-              <Text style={{color: 'red'}}>{errors.phone}</Text>
+              <Text style={{ color: 'red' }}>{errors.phone}</Text>
             ) : null}
 
             <SwitchForm
               label="Deixar whatsapp público"
-              labelStyle={{color: themeContext.drawer.textProfileColor}}
+              labelStyle={{ color: themeContext.drawer.textProfileColor }}
               value={values.public_phone}
               onValueChange={value => setFieldValue('public_phone', value)}
             />
@@ -188,12 +188,12 @@ export default ({onSubmit, loading}) => {
               placeholder="Instagram"
               onChangeText={handleChange('instagram')}
               onBlur={handleBlur('instagram')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={values.instagram}
             />
             <SwitchForm
               label="Deixar instagram público"
-              labelStyle={{color: themeContext.drawer.textProfileColor}}
+              labelStyle={{ color: themeContext.drawer.textProfileColor }}
               value={values.public_instagram}
               onValueChange={value => setFieldValue('public_instagram', value)}
             />
@@ -205,11 +205,11 @@ export default ({onSubmit, loading}) => {
               placeholder="Quantidade de Funcionários"
               onChangeText={handleChange('employees')}
               onBlur={handleBlur('employees')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={values.employees}
             />
             {errors.employees ? (
-              <Text style={{color: 'red'}}>{errors.employees}</Text>
+              <Text style={{ color: 'red' }}>{errors.employees}</Text>
             ) : null}
           </FormItem>
 
@@ -219,11 +219,11 @@ export default ({onSubmit, loading}) => {
               placeholder="Média de faturamento anual do seu negócio"
               onChangeText={handleChange('billing_average')}
               onBlur={handleBlur('billing_average')}
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               value={formatReal(getMoney(values.billing_average))}
             />
             {errors.billing_average ? (
-              <Text style={{color: 'red'}}>{errors.billing_average}</Text>
+              <Text style={{ color: 'red' }}>{errors.billing_average}</Text>
             ) : null}
           </FormItem>
 
@@ -231,7 +231,7 @@ export default ({onSubmit, loading}) => {
             <Input
               numberOfLines={3}
               multiline
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               placeholder="O que você considera ponto forte na sua personalidade empreendedora?"
               onChangeText={handleChange('strongPoints')}
               onBlur={handleBlur('strongPoints')}
@@ -243,7 +243,7 @@ export default ({onSubmit, loading}) => {
             <Input
               numberOfLines={3}
               multiline
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               placeholder="Você possui alguma dúvida quanto empreendedor? "
               onChangeText={handleChange('entrepreneurDoubts')}
               onBlur={handleBlur('entrepreneurDoubts')}
@@ -254,7 +254,7 @@ export default ({onSubmit, loading}) => {
           <FormItem>
             <Input
               multiline
-              style={{color: themeContext.drawer.textProfileColor}}
+              style={{ color: themeContext.drawer.textProfileColor }}
               numberOfLines={3}
               placeholder="Sobre você "
               onChangeText={handleChange('aboutMe')}
@@ -274,16 +274,16 @@ export default ({onSubmit, loading}) => {
                   true: themeContext.input.switch.lightMode,
                 }}
               />
-              <TouchableOpacity
+              <TouchableOpacity                
                 // onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
-                onPress={() => {}}>
+                onPress={() => { }}>
                 <Text style={styles.text}>
-                Concordo com o compartilhamento das minhas informações com a ElaSoma
+                  Concordo com o compartilhamento das minhas informações com a ElaSoma
                 </Text>
               </TouchableOpacity>
             </View>
             {errors.terms ? (
-              <Text style={{color: 'red'}}>{errors.terms}</Text>
+              <Text style={{ color: 'red' }}>{errors.terms}</Text>
             ) : null}
           </FormItem>
 
@@ -294,6 +294,7 @@ export default ({onSubmit, loading}) => {
               size="large"
               disabled={loading}
               text="Enviar"
+              style={{ marginBottom: 44 }}
             />
           </FormItem>
         </Fragment>

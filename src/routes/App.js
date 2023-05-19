@@ -1,25 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import HomeScreen from '../screens/app/HomeScreen';
 import AboutScreen from '../screens/app/AboutScreen';
 import EditProfileScreen from '../screens/app/EditProfileScreen';
 import UserProfileScreen from '../screens/app/UserProfileScreen';
 import DeleteAccountScreen from '../screens/app/DeleteAccountScreen';
 import TermsAndConditionsScreen from '../screens/app/TermsAndConditionsScreen';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {Screens} from '../contants/screens';
+import ChangePasswordScreen from '../screens/app/ChangePasswordScreen';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { Screens } from '../contants/screens';
 import RegisterScreen from '../screens/app/RegisterScreen';
-import {useSelector} from 'react-redux';
-import {RegistrationSchema} from '../contants/formSchemas';
-import {userHasInterests} from '../helpers/store';
+import { useSelector } from 'react-redux';
+import { RegistrationSchema } from '../contants/formSchemas';
+import { userHasInterests } from '../helpers/store';
 import InterestsScreen from '../screens/news/InterestsScreen';
 import Loading from '../components/Loading';
 import TermsOfUse from '../components/TermsOfUse';
 
 const Stack = createStackNavigator();
 
-export default ({navigation}) => {
-  const {authenticated} = useSelector(state => state.auth);
-  const {user} = useSelector(state => state.auth);
+export default ({ navigation }) => {
+  const { authenticated } = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.auth);
   const [registrationValid, isRegistrationValid] = useState(false);
   const [loadingRegistration, isLoadingRegistration] = useState(true);
 
@@ -45,7 +46,7 @@ export default ({navigation}) => {
           cardOverlayEnabled: true,
         }}>
         <Stack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name={Screens.APP.REGISTER_SCREEN}
           component={RegisterScreen}
         />
@@ -61,7 +62,7 @@ export default ({navigation}) => {
           cardOverlayEnabled: true,
         }}>
         <Stack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name={Screens.NEWS.INTERESTS_SCREEN}
           component={InterestsScreen}
         />
@@ -77,44 +78,50 @@ export default ({navigation}) => {
         cardOverlayEnabled: true,
       }}>
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="Home"
         component={HomeScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="AboutScreen"
         component={AboutScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name={Screens.APP.REGISTER_SCREEN}
         component={RegisterScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="EditProfileScreen"
         component={EditProfileScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="UserProfileScreen"
         component={UserProfileScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="DeleteAccountScreen"
         component={DeleteAccountScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="TermsAndConditionsScreen"
         component={TermsAndConditionsScreen}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         name="TermsOfUse"
         component={TermsOfUse}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        // name={Screens.APP.CHANGE_PASSWORD_SCREEN}
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
       />
     </Stack.Navigator>
   );

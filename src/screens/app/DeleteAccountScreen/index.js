@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, View} from 'react-native';
+import { Alert, View } from 'react-native';
 
 import ScrollContainer from '../../../components/Containers/ScrollContainer';
 import BackButtonArea from '../../../components/Containers/BackButtonArea';
@@ -7,8 +7,8 @@ import Text from '../../../components/Typography/Text';
 import UserPicture from '../../../components/LoggedUserPicture';
 
 import AlertIcon from '../../../assets/imgs/alert_triangle_outline.svg';
-import {fireAuth} from '../../../config/firebase';
-import {useNavigation} from '@react-navigation/native';
+import { fireAuth } from '../../../config/firebase';
+import { useNavigation } from '@react-navigation/native';
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -43,9 +43,9 @@ const DeleteAccountScreen = () => {
 
         navigation.navigate('SignIn');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         Alert.alert('Erro', 'Ocorreu um erro ao chamar o serviço', [
-          {text: 'OK', onPress: () => console.log('Ok Pressed')},
+          { text: 'OK', onPress: () => console.log('Ok Pressed') },
           ,
         ]);
       });
@@ -61,7 +61,7 @@ const DeleteAccountScreen = () => {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => deleteUser()},
+        { text: 'OK', onPress: () => deleteUser() },
         ,
       ],
     );
@@ -71,9 +71,9 @@ const DeleteAccountScreen = () => {
     <>
       <Container>
         <ContentHeader>
-          <BackButtonArea />
+          <BackButtonArea style={{ marginTop: 50, marginBottom: 50 }} />
           <TitleContent>
-            <Text size={16} fontStyle="bold">
+            <Text size={16} fontStyle="bold" style={{marginLeft: 5}}>
               Excluir Conta
             </Text>
           </TitleContent>
@@ -83,9 +83,9 @@ const DeleteAccountScreen = () => {
           <UserPicture width={80} height={80} />
         </AvatarContent>
 
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           <ContainerTitle>
-            <Text style={{textAlign: 'center'}} size={18} fontStyle="bold">
+            <Text style={{ textAlign: 'center' }} size={18} fontStyle="bold">
               Deseja realmente excluir sua conta ?
             </Text>
           </ContainerTitle>
@@ -100,7 +100,7 @@ const DeleteAccountScreen = () => {
             <Text size={14} fontStyle="600">
               A exclusão da sua conta é permanente
             </Text>
-            <Text style={{marginTop: 8}} size={12} fontStyle="400">
+            <Text style={{ marginTop: 8 }} size={12} fontStyle="400">
               Seu perfil, interesses e conta serão excluídos permanentemente
             </Text>
           </ContainerAlertText>
@@ -109,7 +109,7 @@ const DeleteAccountScreen = () => {
 
       <ButtonContent>
         <Button onPress={deleteAccountConfirmation} activeOpacity={0.6}>
-          <Text style={{color: 'white'}} size={16} fontStyle="600">
+          <Text style={{ color: 'white' }} size={16} fontStyle="600">
             Excluir conta
           </Text>
         </Button>

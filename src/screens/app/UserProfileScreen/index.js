@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity } from 'react-native';
 
 import Text from '../../../components/Typography/Text';
 import TextButton from '../../../components/Buttons/TextButton';
 import ScrollContainer from '../../../components/Containers/ScrollContainer';
 import UserPicture from '../../../components/LoggedUserPicture';
+import Button from '../../../components/Buttons/Button';
 
 import {useSelector} from 'react-redux';
 
@@ -47,18 +48,28 @@ const UserProfileScreen = ({navigation}) => {
         </Text>
       </View>
 
+      <TouchableOpacity>
+        <Button
+          onPress={() => navigation.navigate('ChangePasswordScreen')}
+          style={{ marginBottom: 25 }}
+          size="large"
+          fontStyle="bold"
+          text="Alterar minha senha"
+          textStyle={{ fontSize: 40 }}
+        />
+      </TouchableOpacity>
+
       <Container>
         <Text style={{textAlign: 'center'}} size={14}>
-          para excluir sua conta permanentemente,{' '}
+          Deseja excluir sua conta permanentemente?{' '}
           <Touchable onPress={() => navigation.push('DeleteAccountScreen')}>
             <Text
               size={14}
               fontStyle="bold"
-              style={{textDecorationLine: 'underline'}}>
-              clique aqui
+              style={{ textAlign: 'center', color: 'red' }}>
+              Excluir conta
             </Text>
           </Touchable>{' '}
-          para fechar sua conta
         </Text>
       </Container>
     </ScrollContainer>
