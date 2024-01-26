@@ -31,3 +31,8 @@ export const ContentButton = styled.View`
   margin-top: 73px;
   margin-bottom: 44px;
 `;
+
+export const Footer = styled.Text`
+  /* margin-top: 15px; */
+  margin-bottom: 45px;
+`;

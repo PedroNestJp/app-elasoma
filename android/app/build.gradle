@@ -146,7 +146,7 @@ def getVersionCode = { ->
         }
     }
 
-    return 9 // default
+    return 13 // default
 }
 
 def getVersionName = { ->
@@ -168,7 +168,7 @@ def getVersionName = { ->
         }
     }
 
-    return '1.7' // default
+    return '2.1' // default
 }
 
 android {
@@ -180,8 +180,8 @@ android {
         applicationId "com.ela_soma"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName '1.7'
+        versionCode 13
+        versionName '2.1'
         aaptOptions{
             noCompress "tflite","model"
         }

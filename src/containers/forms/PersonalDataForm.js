@@ -274,13 +274,20 @@ export default ({ onSubmit, loading }) => {
                   true: themeContext.input.switch.lightMode,
                 }}
               />
-              <TouchableOpacity                
+              <TouchableOpacity
+                onPress={() => navigation.navigate('TermsOfUse')}>
+                {/* onPress={() => navigation.navigate('TermsAndConditionsScreen')}> */}
+                <Text style={styles.text}>
+                  Eu li e concordo com os termos de uso
+                </Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity                
                 // onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
                 onPress={() => { }}>
                 <Text style={styles.text}>
                   Concordo com o compartilhamento das minhas informações com a ElaSoma
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {errors.terms ? (
               <Text style={{ color: 'red' }}>{errors.terms}</Text>

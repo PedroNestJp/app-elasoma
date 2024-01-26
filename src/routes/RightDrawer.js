@@ -129,7 +129,7 @@ export const CustomDrawerComp = props => {
         />
         <DrawerItem
           alignRight
-          label="Filiados"
+          label="Filiadas"
           hasBottomDivider
           onPress={() =>
             navigate(Screens.AFFILIATED.navigator, {

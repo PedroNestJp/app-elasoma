@@ -8,6 +8,7 @@ import LinkSocial from '../screens/auth/LinkSocial';
 import LoginScreen from '../screens/auth/LoginScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import TermsAndConditionsScreen from '../screens/app/TermsAndConditionsScreen';
+import TermsOfUse from '../components/TermsOfUse';
 
 import RightDrawer from './RightDrawer';
 import { getUserFromStore } from '../helpers/store';
@@ -99,9 +100,14 @@ export default () => {
 
         <Stack.Screen
           options={{ headerShown: false }}
+          name="TermsOfUse"
+          component={TermsOfUse}
+        />
+        {/* <Stack.Screen
+          options={{ headerShown: false }}
           name="TermsAndConditionsScreen"
           component={TermsAndConditionsScreen}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
