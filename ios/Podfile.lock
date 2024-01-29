@@ -212,11 +212,11 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - AppAuth (1.5.0):
-    - AppAuth/Core (= 1.5.0)
-    - AppAuth/ExternalUserAgent (= 1.5.0)
-  - AppAuth/Core (1.5.0)
-  - AppAuth/ExternalUserAgent (1.5.0):
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - appcenter-analytics (4.4.4):
     - AppCenter/Analytics (~> 4.0)
@@ -409,22 +409,22 @@ PODS:
     - AppAuth (~> 1.2)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.11.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.11.5):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.11.5):
     - GoogleUtilities/Environment
-  - GoogleUtilities/Network (7.7.0):
+  - GoogleUtilities/Network (7.11.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
+  - "GoogleUtilities/NSData+zlib (7.11.5)"
+  - GoogleUtilities/Reachability (7.11.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.7.0):
+  - GoogleUtilities/UserDefaults (7.11.5):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.28.2)":
     - "gRPC-C++/Implementation (= 1.28.2)"
@@ -450,14 +450,14 @@ PODS:
     - BoringSSL-GRPC (= 0.0.7)
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
-  - GTMAppAuth (1.3.0):
-    - AppAuth/Core (~> 1.4)
-    - GTMSessionFetcher/Core (~> 1.5)
+  - GTMAppAuth (1.3.1):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (1.7.2)
   - InputMask (6.1.0)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
-  - leveldb-library (1.22.1)
+  - leveldb-library (1.22.2)
   - libevent (2.1.12)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
@@ -818,6 +818,8 @@ PODS:
     - React-Core
   - RNSVG (11.0.1):
     - React
+  - RNVectorIcons (9.2.0):
+    - React-Core
   - Sentry (7.5.1):
     - Sentry/Core (= 7.5.1)
   - Sentry/Core (7.5.1)
@@ -913,6 +915,7 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1088,12 +1091,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
-  AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   AppCenter: 3fd04aa1b166e16fdb03ec81dabe488aece83fbd
   appcenter-analytics: 4403fa85b98266f0672aa3676cb0416755ce2ff6
   appcenter-core: 9b90e7b8581598cf4f61d2efe41581cc69631da8
@@ -1103,7 +1108,7 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  CodePush: 5a26b230d14bc2c6a84514e3bad9321065247fb0
+  CodePush: f9e2e9fcc3dbd72f75928d677375905220ac40d5
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: a926a9aaa3596b181972abf0f47eff3dee796222
   FBReactNativeSpec: f1141d5407f4a27c397bca5db03cc03919357b0d
@@ -1133,14 +1138,14 @@ SPEC CHECKSUMS:
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   GoogleDataTransport: 8b0e733ea77c9218778e5a9e34ba9508b8328939
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
-  GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
+  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
-  leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
@@ -1157,13 +1162,13 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 50a73168582868421112609d2fb155e607e34ec8
   React-jsinspector: 953260b8580780a6e81f2a6d319a8d42fd5028d8
   React-logger: fa4ff1e9c7e115648f7c5dafb7c20822ab4f7a7e
-  react-native-cameraroll: 9d2b7c1707204d2040d2812f960c6cebdbd9f670
+  react-native-cameraroll: 60ba0068826eab1c8d43146191bafd4363ea58a7
   react-native-fbsdk: c35d42169e64aaf66f01713c1e18d0674f7f6519
-  react-native-safe-area-context: 01158a92c300895d79dee447e980672dc3fb85a6
-  react-native-simple-toast: b986e6c1befdc211af3df1bae293278a44e32990
-  react-native-text-input-mask: c49cb363db8c158f2e06e61f6732ab13b056eea6
-  react-native-tracking-transparency: d39c548f86b15315eb9d0532cff2a7d989085bee
-  react-native-webview: ef8d30ecc5baf6bf7821690180c2f9bf2bdf00c0
+  react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
+  react-native-simple-toast: bf002828cf816775a6809f7a9ec3907509bce11f
+  react-native-text-input-mask: 36a546b378fadd2efe1b7484a859d34bc2c80395
+  react-native-tracking-transparency: b2029ff756f1128b1f2c7c7c7f3003bc3c950f9f
+  react-native-webview: 0aa2cde4ee7e3e1c5fffdf64dbce9c709aa18155
   React-perflogger: 169fb34f60c5fd793b370002ee9c916eba9bc4ae
   React-RCTActionSheet: 2355539e02ad5cd4b1328682ab046487e1e1e920
   React-RCTAnimation: 150644a38c24d80f1f761859c10c727412303f57
@@ -1178,9 +1183,9 @@ SPEC CHECKSUMS:
   ReactCommon: 8a7a138ae43c04bb8dd760935589f326ca810484
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: 473b2c076f1a48a537610580a168c1fb6d0a90c6
-  RNCAsyncStorage: cb9a623793918c6699586281f0b51cbc38f046f9
-  RNCCheckbox: 934e11d33abb6b0db105cfa5a22a42bd89dfb4b9
-  RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCCheckbox: ed1b4ca295475b41e7251ebae046360a703b6eb5
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNFBApp: 02bde3edecf2e9694b908a5d3504e03449980f20
   RNFBAuth: 16f2b91bf53f398d83a15cff0dd52225967c1d78
@@ -1196,6 +1201,7 @@ SPEC CHECKSUMS:
   RNSentry: 97bc62fa65b7d663daee16fbf9771470852217cf
   RNShare: d22507fa5e80c72f236b5622556cf831de5b1e93
   RNSVG: 67f1f12dae2cef6ed59a42cae74a6b8f5a9e7b46
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Sentry: 0718c3ad7a08e1107599610795adaf08864102f3
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
@@ -1203,6 +1209,6 @@ SPEC CHECKSUMS:
   Yoga: b316a990bb6d115afa1b436b5626ac7c61717d17
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 78a96fbb5122fd29b3d30bf9abe15e5b9ab55f02
+PODFILE CHECKSUM: 7f036decbfab1919e596ec7cc3403b934422aa95
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.13.0
