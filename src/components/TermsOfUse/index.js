@@ -95,7 +95,7 @@ const TermsOfUse = () => {
           voz e poder de decisão em âmbitos comerciais.
         </TextBody> */}
 
-        <TextBody style={{ marginTop: -16 }}>
+        <TextBody style={{ marginTop: 16 }}>
           <Title>6.</Title> Para qualquer alteração de cadastro, a filiada deve 
           entrar em contato com o nosso setor de relacionamento, disponível no 
           número (83) 98773-6333.
