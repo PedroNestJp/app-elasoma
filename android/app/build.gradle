@@ -137,6 +137,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.fbjni:fbjni-java-only:0.2.2'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-core:20.0.2'
