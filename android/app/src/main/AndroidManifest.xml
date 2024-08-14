@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ela_soma">
+    package="com.sejasoma">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -12,7 +12,7 @@
 
     <application
         android:largeHeap="true"
-            android:name="com.ela_soma.MainApplication"
+        android:name="com.ela_soma.MainApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,7 +27,7 @@
             android:resource="@drawable/ic_stat_soma" />
 
         <activity
-                android:name="com.ela_soma.MainActivity"
+            android:name="com.ela_soma.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
             android:label="@string/app_name"
             android:launchMode="singleTask"

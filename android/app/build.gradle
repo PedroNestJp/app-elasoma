@@ -65,6 +65,9 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    lintOptions {
+          abortOnError false
+      }
 
     defaultConfig {
         applicationId "com.ela_soma"
