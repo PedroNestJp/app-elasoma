@@ -1,6 +1,5 @@
-package com.sejasoma;
+package com.ela_soma;
 
-import com.sejasoma.BuildConfig;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;

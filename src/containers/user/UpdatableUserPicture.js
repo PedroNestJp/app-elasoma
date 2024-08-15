@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
   Menu,
@@ -21,7 +26,54 @@ export default ({width, height}) => {
   const [opened, setOpened] = useState(false);
   const [loading, isLoading] = useState(false);
 
+  const requestPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+        ]);
+
+        const readGranted =
+          granted['android.permission.READ_EXTERNAL_STORAGE'] ===
+          PermissionsAndroid.RESULTS.GRANTED;
+        const writeGranted =
+          granted['android.permission.WRITE_EXTERNAL_STORAGE'] ===
+          PermissionsAndroid.RESULTS.GRANTED;
+        const cameraGranted =
+          granted['android.permission.CAMERA'] ===
+          PermissionsAndroid.RESULTS.GRANTED;
+
+        return readGranted && writeGranted && cameraGranted;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    } else {
+      return true; // iOS permissions are handled differently
+    }
+  };
+
+  const checkAndRequestPermission = async () => {
+    const hasPermission = await requestPermission();
+    if (!hasPermission) {
+      notifyError({
+        title: 'Permissão Negada',
+        message:
+          'O aplicativo precisa de permissão para acessar a galeria e a câmera.',
+      });
+      return false;
+    }
+    return true;
+  };
+
   const useGallery = async () => {
+    const hasPermission = await checkAndRequestPermission();
+    if (!hasPermission) {
+      return;
+    }
+
     const image = await ImagePicker.openPicker({
       width: 500,
       height: 500,
@@ -36,6 +88,11 @@ export default ({width, height}) => {
   };
 
   const useCamera = async () => {
+    const hasPermission = await checkAndRequestPermission();
+    if (!hasPermission) {
+      return;
+    }
+
     const image = await ImagePicker.openCamera({
       width: 500,
       height: 500,
@@ -135,10 +192,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
 });
-
-// <OptionsMenu
-//   button={myIcon}
-//   buttonStyle={{width, height}}
-//   options={['Usar câmera', 'Escolher da Galeria']}
-//   actions={[useCamera, useGallery]}
-// />

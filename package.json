@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=development && react-native start",
-    "android": "react-native run-android && cd android && ./gradlew build lintOptions {abortOnError false}",
+    "android": "react-native run-android",
     "ios": "react-native run-ios ",
     "build:apk": "cd android && ./gradlew assembleRelease",
     "build": "cd android && ./gradlew clean && ./gradlew build",
@@ -51,7 +51,7 @@
     "react-native-fbsdk": "^1.1.2",
     "react-native-fix-image": "^2.0.1",
     "react-native-gesture-handler": "^1.8.0",
-    "react-native-image-crop-picker": "^0.35.2",
+    "react-native-image-crop-picker": "^0.41.2",
     "react-native-open-maps": "^0.3.5",
     "react-native-picker-select": "^8.0.4",
     "react-native-popup-menu": "^0.15.7",
