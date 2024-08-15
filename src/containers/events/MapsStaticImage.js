@@ -20,12 +20,12 @@ export default ({
   const style = theme === 'light' ? lightStyle : darkStyle;
 
   useEffect(() => {
-    Dimensions.addEventListener('change', ({window}) =>
+    const subscription = Dimensions.addEventListener('change', ({window}) =>
       setInnerWidth(window.width),
     );
 
     return () => {
-      Dimensions.removeEventListener('change');
+      subscription.remove();
     };
   }, []);
 

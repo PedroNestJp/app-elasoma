@@ -2,11 +2,12 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
+  padding: 16px;
+  align-items: flex-start;
 `;
 
 export const Scroll = styled.ScrollView`
   background-color: ${props => props.theme.containerBackground};
-  padding: 0 16px;
 `;
 
 export const Touchable = styled.TouchableOpacity`
@@ -28,11 +29,10 @@ export const TextBody = styled.Text`
 `;
 
 export const ContentButton = styled.View`
-  margin-top: 73px;
-  margin-bottom: 44px;
+  padding: 16px;
+  background-color: ${props => props.theme.containerBackground};
 `;
 
 export const Footer = styled.Text`
-  /* margin-top: 15px; */
   margin-bottom: 45px;
 `;

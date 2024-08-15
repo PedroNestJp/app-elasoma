@@ -73,9 +73,9 @@ export default ({news, onSelectCard, order}) => {
     lastStringChar(order.toString()) === '6';
 
   useEffect(() => {
-    Dimensions.addEventListener('change', ({window}) => setWidth(window.width));
+    const subscription = Dimensions.addEventListener('change', ({window}) => setWidth(window.width));
     return () => {
-      Dimensions.removeEventListener('change');
+      subscription.remove();
     };
   });
 
