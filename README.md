@@ -19,8 +19,8 @@
 1. Instale o [NVM para Windows](https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-setup.exe).
 2. No terminal, execute os seguintes comandos:
    \`\`\`bash
-   nvm install 18
-   nvm use 18
+   nvm install 14
+   nvm use 14
    nvm current
    \`\`\`
    - **OBS:** Certifique-se de que a versão do Node seja a \`v18.x.x\`.
@@ -71,7 +71,7 @@
    \`\`\`bash
    yarn android
    \`\`\`
-   - **OBS:** Se ocorrerem erros relacionados a variáveis de ambiente após a configuração das mesmas, verique se estão configuradas corretamente e reinicie o seu computador (como \`ANDROID_HOME\`), reinicie o computador.
+   - **OBS:** Se ocorrerem erros relacionados a variáveis de ambiente após a configuração das mesmas, verique se estão configuradas corretamente e reinicie o seu computador, reinicie o computador.
 
 2. Se necessário, execute:
    \`\`\`bash
