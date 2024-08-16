@@ -11,12 +11,19 @@ import FormItem from '../../components/Form/FormItem';
 import Loading from '../../components/Loading';
 import Input from '../../components/Input';
 import ScrollContainer from '../../components/Containers/ScrollContainer';
-import BackButtonContainer from '../../components/Containers/BackButtonArea'
+import BackButtonContainer from '../../components/Containers/BackButtonArea';
 import Button from '../../components/Buttons/Button';
 
-const passwordSchema = Yup.object().shape({ // Validação
-  oldPassword: Yup.string().required('Senha atual é requerida'),
-  password: Yup.string().required('Nova senha é requerida'),
+// Validação com restrição de 6 a 15 caracteres para a nova senha
+const passwordSchema = Yup.object().shape({
+  oldPassword: Yup.string()
+    .required('Senha atual é requerida')
+    .min(6, 'A senha deve ter no mínimo 6 caracteres')
+    .max(15, 'A senha deve ter no máximo 15 caracteres'),
+  password: Yup.string()
+    .required('Nova senha é requerida')
+    .min(6, 'A senha deve ter no mínimo 6 caracteres')
+    .max(15, 'A senha deve ter no máximo 15 caracteres'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'As senhas devem corresponder')
     .required('Confirmação de senha é requerida'),
@@ -30,26 +37,33 @@ const ChangePasswordScreen = () => {
   const handleEdit = useCallback(async (values) => {
     try {
       const { oldPassword, password, confirmPassword } = values;
+
+      if (oldPassword === password) {
+        Alert.alert('ERRO', 'A nova senha não pode ser igual à senha atual!');
+        return;
+      }
+
       if (password !== confirmPassword) {
         Alert.alert('ERRO', 'As senhas não são iguais!');
         return;
       }
+
       setLoading(true);
+
       const emailCred = auth.EmailAuthProvider.credential(
         user.email,
         oldPassword,
       );
+
       auth()
         .currentUser.reauthenticateWithCredential(emailCred)
         .then(() => {
-          // User successfully reauthenticated.
           auth().currentUser.updatePassword(password)
             .then(() => {
               Alert.alert('SUCESSO', 'Sua senha foi alterada com sucesso!');
               navigation.goBack();
             })
             .catch(() => {
-              // this will not usually happen as we have already authenticated the user
               Alert.alert('ERRO', 'Houve um erro ao atualizar a senha.');
               setLoading(false);
             });
@@ -70,12 +84,14 @@ const ChangePasswordScreen = () => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      enabled>
+      enabled
+    >
       <ScrollContainer>
         <ScrollView
           style={{ flex: 1 }}
           contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+        >
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, marginBottom: 20 }}>
               <View>
@@ -95,46 +111,55 @@ const ChangePasswordScreen = () => {
               validationSchema={passwordSchema}
               onSubmit={handleEdit}
             >
-              {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+              {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                 <>
                   <FormItem>
                     <Input
                       name="oldPassword"
-                      placeholder='Digite sua senha atual'
+                      placeholder="Digite sua senha atual"
                       autoCorrect={false}
                       secureTextEntry
                       autoCapitalize="none"
                       onChangeText={handleChange('oldPassword')}
                       onBlur={handleBlur('oldPassword')}
                       value={values.oldPassword}
-                      error={errors.oldPassword}
+                      error={touched.oldPassword && errors.oldPassword}
                     />
+                    {touched.oldPassword && errors.oldPassword && (
+                      <Text style={{ color: 'red' }}>{errors.oldPassword}</Text>
+                    )}
                   </FormItem>
                   <FormItem>
                     <Input
                       name="password"
-                      placeholder='Digite sua nova senha'
+                      placeholder="Digite sua nova senha"
                       autoCorrect={false}
                       secureTextEntry
                       autoCapitalize="none"
                       onChangeText={handleChange('password')}
                       onBlur={handleBlur('password')}
                       value={values.password}
-                      error={errors.password}
+                      error={touched.password && errors.password}
                     />
+                    {touched.password && errors.password && (
+                      <Text style={{ color: 'red' }}>{errors.password}</Text>
+                    )}
                   </FormItem>
                   <FormItem>
                     <Input
                       name="confirmPassword"
-                      placeholder='Confirme sua nova senha'
+                      placeholder="Confirme sua nova senha"
                       autoCorrect={false}
                       secureTextEntry
                       autoCapitalize="none"
                       onChangeText={handleChange('confirmPassword')}
                       onBlur={handleBlur('confirmPassword')}
                       value={values.confirmPassword}
-                      error={errors.confirmPassword}
+                      error={touched.confirmPassword && errors.confirmPassword}
                     />
+                    {touched.confirmPassword && errors.confirmPassword && (
+                      <Text style={{ color: 'red' }}>{errors.confirmPassword}</Text>
+                    )}
                   </FormItem>
                   <TouchableOpacity>
                     <Button
