@@ -1,19 +1,20 @@
-import {getColData, getColRef, getDoc} from './common/firestore';
-import {firebaseConfig, firestore} from '../config/firebase';
-import {getUserFromStore} from '../helpers/store';
-import {getSingleState} from './states';
+import { getColData, getColRef, getDoc } from './common/firestore';
+import { firebaseConfig, firestore } from '../config/firebase';
+import { getUserFromStore } from '../helpers/store';
+import { getSingleState } from './states';
 
 const DISCOUNTS_CLUB_CATEGORY_URL = 'discounts_club_categories';
 const DISCOUNTS_CLUB_URL = 'discounts_club';
 
-export const getDiscountClubCategoriesService = async () => {
-  return await getColData(DISCOUNTS_CLUB_CATEGORY_URL, {orderBy: 'name'});
-};
+// Service to get discount club categories
+export const getDiscountClubCategoriesService = () =>
+  getColData(DISCOUNTS_CLUB_CATEGORY_URL, { orderBy: 'name' });
 
-export const getSingleCategory = async categoryId => {
-  return await getDoc(`${DISCOUNTS_CLUB_CATEGORY_URL}/${categoryId}`);
-};
+// Service to get a single category by ID
+export const getSingleCategory = categoryId =>
+  getDoc(`${DISCOUNTS_CLUB_CATEGORY_URL}/${categoryId}`);
 
+// Service to get discount club categories filtered by state
 export const getDiscountClubCategoriesByStateService = async selectedState => {
   const data = await firestore
     .collection(DISCOUNTS_CLUB_CATEGORY_URL)
@@ -21,11 +22,10 @@ export const getDiscountClubCategoriesByStateService = async selectedState => {
     .orderBy(`quantity_per_state.${selectedState}`, 'asc')
     .get();
 
-  const categories = [];
-  data.forEach(item => categories.push({id: item.id, ...item.data()}));
-  return categories;
+  return data.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
 
+// Service to get discounts by state and category
 export const getDiscountsByStateAndCategory = async (stateId, categoryId) => {
   try {
     const data = await firestore
@@ -36,35 +36,29 @@ export const getDiscountsByStateAndCategory = async (stateId, categoryId) => {
       .orderBy('createdAt', 'desc')
       .get();
 
-    const discounts = [];
-    data.forEach(item => discounts.push({id: item.id, ...item.data()}));
-
-    console.log(discounts, 'CLUBE BENEFICIOS');
-    return discounts;
+    return data.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (e) {
-    console.log(
-      'Houve um erro ao coletar descontos por estado e categoria. getDiscountsByStateAndCategory ',
-    );
+    console.error('Error fetching discounts by state and category:', e);
     throw e;
   }
 };
 
+// Service to create a new discount
 export const createDiscountService = async values => {
   const newDiscount = await mountDiscountObject(values);
-
-  const newsRef = getColRef(DISCOUNTS_CLUB_URL, {});
-  return await newsRef.add(newDiscount);
+  const newsRef = getColRef(DISCOUNTS_CLUB_URL);
+  return newsRef.add(newDiscount);
 };
 
+// Utility to construct the discount object
 const mountDiscountObject = async values => {
   const user = getUserFromStore();
   const categoryDetails = await getSingleCategory(values.category.id);
   const stateDetails = await getSingleState(values.state);
-  const address = getAddressByObject({
+  const address = formatAddress({
     ...values.address,
     number: values.number,
   });
-
   const coordinates = await getCoordinatesService(address);
 
   return {
@@ -74,10 +68,10 @@ const mountDiscountObject = async values => {
     company: values.company,
     brand: values.brand,
     categoryId: values.category.id,
-    categoryDetails: categoryDetails,
+    categoryDetails,
     subcategory: values.subcategory,
     state: values.state,
-    stateDetails: stateDetails,
+    stateDetails,
     address,
     mapCoordinates: coordinates.geometry.location,
     author: {
@@ -92,29 +86,25 @@ const mountDiscountObject = async values => {
   };
 };
 
+// Utility to get coordinates from Google Maps API
 export const getCoordinatesService = async query => {
-  const request = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?key=${firebaseConfig.apiKey}&address=${query}`,
+  const response = await fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?key=${firebaseConfig.apiKey}&address=${query}`
   );
-  const {results} = await request.json();
-
+  const { results } = await response.json();
   return results[0];
 };
 
+// Service to get address details by Brazilian postal code (CEP)
 export const getAddressByCepService = async cep => {
-  const request = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-  const {erro, logradouro, bairro, localidade, uf} = await request.json();
+  const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+  const { erro, logradouro, bairro, localidade, uf } = await response.json();
 
   if (!erro) {
-    return {logradouro, bairro, localidade, uf};
+    return { logradouro, bairro, localidade, uf };
   }
 };
 
-export const getAddressByObject = address => {
-  if (address) {
-    const {logradouro, bairro, localidade, uf, number} = address;
-    return `${logradouro || ''}, ${number || ''} ${bairro ||
-      ''}, ${localidade || ''} - ${uf || ''}`;
-  }
-  return null;
-};
+// Utility to format an address object into a string
+export const formatAddress = ({ logradouro = '', bairro = '', localidade = '', uf = '', number = '' } = {}) => 
+  `${logradouro}, ${number} ${bairro}, ${localidade} - ${uf}`.trim();

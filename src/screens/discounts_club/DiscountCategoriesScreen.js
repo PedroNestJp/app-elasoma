@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, View} from 'react-native';
-import {useSafeArea} from 'react-native-safe-area-context';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { Dimensions, FlatList, View, StyleSheet } from 'react-native';
+import { useSafeAreaInsets  } from 'react-native-safe-area-context';
 import Text from '../../components/Typography/Text';
-import {getUserFromStore} from '../../helpers/store';
+import { getUserFromStore } from '../../helpers/store';
 import SelectPicker from '../../components/SelectPicker';
 import ViewContainer from '../../components/Containers/ViewContainer';
 import StateSelector from '../../containers/forms/StateSelector';
-import {
-  getDiscountClubCategoriesByStateService,
-  getDiscountsByStateAndCategory,
-} from '../../services/discountClub';
+import { getDiscountClubCategoriesByStateService, getDiscountsByStateAndCategory } from '../../services/discountClub';
 import DiscountCard from '../../containers/discountsClub/DiscountCard';
 
-export default ({navigation}) => {
+// Componente principal
+const DiscountsScreen = ({ navigation }) => {
   const user = getUserFromStore();
+  const insets = useSafeAreaInsets();
 
   const [selectedState, setSelectedState] = useState(user.state);
   const [categories, setCategories] = useState([]);
@@ -21,109 +20,117 @@ export default ({navigation}) => {
   const [discounts, setDiscounts] = useState([]);
   const [loadingDiscounts, setLoadingDiscounts] = useState(false);
 
-  const insets = useSafeArea();
+  // Função para buscar categorias
+  const getCategories = useCallback(async () => {
+    try {
+      const fetchedCategories = await getDiscountClubCategoriesByStateService(selectedState);
+      setCategories(fetchedCategories);
+      if (fetchedCategories.length > 0) {
+        setSelectedCategory(fetchedCategories[0].id);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar categorias:', error);
+    }
+  }, [selectedState]);
 
+  // Função para buscar descontos da categoria selecionada
+  const loadCategoryDiscounts = useCallback(async () => {
+    if (!selectedCategory) return;
+
+    setLoadingDiscounts(true);
+    try {
+      const fetchedDiscounts = await getDiscountsByStateAndCategory(selectedState, selectedCategory);
+      setDiscounts(fetchedDiscounts);
+    } catch (error) {
+      console.error('Erro ao carregar descontos:', error);
+    } finally {
+      setLoadingDiscounts(false);
+    }
+  }, [selectedState, selectedCategory]);
+
+  // Efeitos para buscar categorias e descontos
   useEffect(() => {
     getCategories();
-  }, [selectedState]);
+  }, [selectedState, getCategories]);
 
   useEffect(() => {
     loadCategoryDiscounts();
-  }, [selectedCategory]);
+  }, [selectedCategory, loadCategoryDiscounts]);
 
-  const getCategories = async () => {
-    setDiscounts([]);
-    const categories = await getDiscountClubCategoriesByStateService(
-      selectedState,
-    );
-
-    if (categories.length > 0) {
-      setSelectedCategory(categories[0].id);
-    }
-    setCategories(categories);
-  };
-
-  const loadCategoryDiscounts = async () => {
-    try {
-      setLoadingDiscounts(true);
-      const discounts = await getDiscountsByStateAndCategory(
-        selectedState,
-        selectedCategory,
-      );
-      setDiscounts(discounts);
-      setLoadingDiscounts(false);
-    } catch (e) {
-      setLoadingDiscounts(false);
-    }
-  };
-
-  const filterByState = async stateId => {
+  // Função para atualizar o estado selecionado
+  const handleStateChange = useCallback((stateId) => {
     setSelectedState(stateId);
-  };
+  }, []);
 
-  const StateFilter = () => (
-    <View
-      style={{
-        paddingLeft: 10,
-        paddingRight: 34,
-        minWidth: Dimensions.get('window').width / 2 - 10,
-      }}>
-      <StateSelector onValueChange={filterByState} selected={selectedState} />
+  // Função para atualizar a categoria selecionada
+  const handleCategoryChange = useCallback((categoryId) => {
+    setSelectedCategory(categoryId);
+  }, []);
+
+  // Renderização dos filtros
+  const renderStateFilter = useMemo(() => (
+    <View style={styles.stateFilterContainer}>
+      <StateSelector onValueChange={handleStateChange} selected={selectedState} />
     </View>
-  );
+  ), [handleStateChange, selectedState]);
 
-  const CategoryFilter = () => (
-    <View
-      style={{
-        marginLeft: 24,
-        marginRight: 10,
-        minWidth: Dimensions.get('window').width / 2 - 10,
-      }}>
+  const renderCategoryFilter = useMemo(() => (
+    <View style={styles.categoryFilterContainer}>
       <SelectPicker
         useNativeAndroidPickerStyle={false}
-        placeholder={{
-          label: 'Categoria',
-          value: null,
-          color: '#9EA0A4',
-        }}
+        placeholder={{ label: 'Categoria', value: null, color: '#9EA0A4' }}
         value={selectedCategory}
-        onValueChange={v => setSelectedCategory(v)}
-        items={categories.map(category => ({
-          label: category.name,
-          value: category.id,
-        }))}
+        onValueChange={handleCategoryChange}
+        items={categories.map(category => ({ label: category.name, value: category.id }))}
       />
     </View>
-  );
+  ), [categories, selectedCategory, handleCategoryChange]);
 
   return (
     <ViewContainer
       noPaddingHorizontal
-      style={{paddingTop: insets.top + 24}}
-      canGoBackStyle={{paddingHorizontal: 24}}
-      canGoBack>
-      <View
-        style={{
-          marginVertical: 20,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <CategoryFilter />
-        <StateFilter />
+      style={{ paddingTop: insets.top + 24 }}
+      canGoBackStyle={{ paddingHorizontal: 24 }}
+      canGoBack
+    >
+      <View style={styles.filtersContainer}>
+        {renderCategoryFilter}
+        {renderStateFilter}
       </View>
 
       <ViewContainer noPaddingHorizontal loading={loadingDiscounts}>
         <FlatList
           ListEmptyComponent={() => (
-            <Text style={{padding: 24}}>Nenhum resultado foi encontrado</Text>
+            <Text style={styles.emptyText}>Nenhum resultado foi encontrado</Text>
           )}
           data={discounts}
-          renderItem={({item}) => (
-            <DiscountCard key={item.id} discount={item} />
-          )}
+          renderItem={({ item }) => <DiscountCard discount={item} />}
           keyExtractor={item => item.id}
         />
       </ViewContainer>
     </ViewContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  filtersContainer: {
+    marginVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stateFilterContainer: {
+    paddingLeft: 10,
+    paddingRight: 34,
+    minWidth: Dimensions.get('window').width / 2 - 10,
+  },
+  categoryFilterContainer: {
+    marginLeft: 24,
+    marginRight: 10,
+    minWidth: Dimensions.get('window').width / 2 - 10,
+  },
+  emptyText: {
+    padding: 24,
+  },
+});
+
+export default DiscountsScreen;
