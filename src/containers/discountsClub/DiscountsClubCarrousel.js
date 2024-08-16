@@ -1,208 +1,94 @@
-// import React, {useEffect, useRef, useState} from 'react';
-// import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
-// import Carousel, {Pagination} from 'react-native-snap-carousel';
-// import Text from '../../components/Typography/Text';
-// import styled from 'styled-components';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Text from '../../components/Typography/Text'; // Presumindo que você tenha esse componente
 
-// const CarouselContainer = styled(View)`
-//   background-color: ${props => props.theme.colors.tertiary};
-//   padding-top: 30px;
-//   padding-bottom: 30px;
-// `;
+const compareCategories = (a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase());
 
-// export default ({categories, onChange}) => {
-//   if (!categories || categories.length <= 0) return null;
-
-//   const carouselRef = useRef(null);
-//   const firstItemToShow = Math.floor(categories.length / 2);
-//   const [activeSlide, setActiveSlide] = useState(firstItemToShow);
-
-//   useEffect(() => {
-//     onChange(categories[firstItemToShow]);
-//     console.log('>>> Detalhes das Categorias:', JSON.stringify(categories, null, 2));
-//   }, [categories]);
-
-//   const onSnapToItem = index => {
-//     setActiveSlide(index);
-//     onChange(categories[index]);
-//   };
-
-//   const focusItem = (item, index) => {
-//     carouselRef.current?.snapToItem(index, true, true);
-//     setActiveSlide(index);
-//     onChange(categories[index]);
-//   };
-
-//   return (
-//     <CarouselContainer>
-//       <Carousel
-//         enableSnap
-//         firstItem={firstItemToShow}
-//         activeSlideOffset={0}
-//         ref={carouselRef}
-//         data={categories}
-//         layout={'default'}
-//         renderItem={({item, index}) => (
-//           <TouchableOpacity onPress={() => focusItem(item, index)}>
-//             <CategoryIcon category={item} />
-//           </TouchableOpacity>
-//         )}
-//         sliderWidth={Dimensions.get('window').width}
-//         itemWidth={150}
-//         onSnapToItem={onSnapToItem}
-//       />
-//       <View
-//         style={{
-//           display: 'flex',
-//           flexDirection: 'row',
-//           justifyContent: 'center',
-//         }}>
-//         <Pagination
-//           containerStyle={{
-//             bottom: 0,
-//             paddingTop: 20,
-//             paddingBottom: 0,
-//           }}
-//           dotColor="#D6BBDB"
-//           inactiveDotColor="#999"
-//           activeDotIndex={activeSlide}
-//           dotsLength={categories.length}
-//         />
-//       </View>
-//     </CarouselContainer>
-//   );
-// };
-
-// const CategoryIcon = ({category}) => (
-//   <View style={{alignItems: 'center'}}>
-//     <View>
-//       <Image
-//         source={{
-//           uri: category.icon,
-//         }}
-//         style={{
-//           width: 70,
-//           height: 70,
-//         }}
-//       />
-//     </View>
-//     <View style={{marginTop: 12}}>
-//       <Text size={12}>{category.name}</Text>
-//     </View>
-//   </View>
-// );
-
-
-
-import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import Text from '../../components/Typography/Text';
-import styled from 'styled-components';
-
-const CarouselContainer = styled(View)`
-  background-color: ${props => props.theme.colors.tertiary};
-  padding-top: 30px;
-  padding-bottom: 30px;
-`;
-
-const compareCategories = (a, b) => {
-  const nameA = a.name.toUpperCase();
-  const nameB = b.name.toUpperCase();
-
-  if (nameA < nameB) {
-    return -1;
-  }
-  if (nameA > nameB) {
-    return 1;
-  }
-  return 0;
-};
-
-export default ({categories, onChange}) => {
-  if (!categories || categories.length <= 0) return null;
-
+const CategoryCarousel = ({ categories, onChange }) => {
   const carouselRef = useRef(null);
-  const firstItemToShow = Math.floor(categories.length / 2);
-  const [activeSlide, setActiveSlide] = useState(firstItemToShow);
+  const [activeSlide, setActiveSlide] = useState(Math.floor(categories.length / 2));
+
+  const sortedCategories = useMemo(() => categories.slice().sort(compareCategories), [categories]);
 
   useEffect(() => {
-    onChange(categories[firstItemToShow]);
-    console.log(
-      '>>> Detalhes das Categorias:',
-      JSON.stringify(categories, null, 2),
-    );
-  }, [categories]);
+    if (categories && categories.length > 0) {
+      onChange(sortedCategories[activeSlide]);
+    }
+  }, [categories, activeSlide, onChange, sortedCategories]);
 
-  const onSnapToItem = index => {
+  const onSnapToItem = useCallback(index => {
     setActiveSlide(index);
-    onChange(categories[index]);
-  };
+    onChange(sortedCategories[index]);
+  }, [onChange, sortedCategories]);
 
-  const focusItem = (item, index) => {
+  const focusItem = useCallback((_, index) => {
     carouselRef.current?.snapToItem(index, true, true);
     setActiveSlide(index);
-    onChange(categories[index]);
-  };
+    onChange(sortedCategories[index]);
+  }, [onChange, sortedCategories]);
 
-  const sortedCategories = categories.slice().sort(compareCategories);
+  if (!categories || categories.length === 0) return null;
 
   return (
-    <CarouselContainer>
+    <View style={styles.carouselContainer}>
       <Carousel
-        enableSnap
-        firstItem={firstItemToShow}
-        activeSlideOffset={0}
         ref={carouselRef}
         data={sortedCategories}
-        layout={'default'}
+        firstItem={activeSlide}
+        layout="default"
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={150}
+        onSnapToItem={onSnapToItem}
         renderItem={({ item, index }) => (
           <TouchableOpacity onPress={() => focusItem(item, index)}>
             <CategoryIcon category={item} />
           </TouchableOpacity>
         )}
-        sliderWidth={Dimensions.get('window').width}
-        itemWidth={150}
-        onSnapToItem={onSnapToItem}
       />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
+      <View style={styles.carouselWrapper}>
         <Pagination
-          containerStyle={{
-            bottom: 0,
-            paddingTop: 20,
-            paddingBottom: 0,
-          }}
+          containerStyle={styles.paginationContainer}
           dotColor="#D6BBDB"
           inactiveDotColor="#999"
           activeDotIndex={activeSlide}
           dotsLength={sortedCategories.length}
         />
       </View>
-    </CarouselContainer>
+    </View>
   );
 };
 
 const CategoryIcon = ({ category }) => (
-  <View style={{ alignItems: 'center' }}>
-    <View>
-      <Image
-        source={{
-          uri: category.icon,
-        }}
-        style={{
-          width: 70,
-          height: 70,
-        }}
-      />
-    </View>
-    <View style={{ marginTop: 12 }}>
-      <Text size={12}>{category.name}</Text>
-    </View>
+  <View style={styles.categoryIconContainer}>
+    <Image style={styles.categoryIconImage} source={{ uri: category.icon }} />
+    <Text style={styles.categoryName}>{category.name}</Text>
   </View>
 );
+
+const styles = StyleSheet.create({
+  carouselContainer: {
+    paddingVertical: 30,
+  },
+  carouselWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  paginationContainer: {
+    bottom: 0,
+    paddingTop: 20,
+  },
+  categoryIconContainer: {
+    alignItems: 'center',
+  },
+  categoryIconImage: {
+    width: 70,
+    height: 70,
+  },
+  categoryName: {
+    marginTop: 12,
+    fontSize: 12,
+  },
+});
+
+export default CategoryCarousel;

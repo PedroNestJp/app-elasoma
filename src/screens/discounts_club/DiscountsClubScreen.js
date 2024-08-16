@@ -1,92 +1,87 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View, Dimensions} from 'react-native';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { FlatList, View, Dimensions, StyleSheet } from 'react-native';
 
-import {getUserFromStore} from '../../helpers/store';
+import { getUserFromStore } from '../../helpers/store';
 import ViewContainer from '../../components/Containers/ViewContainer';
 import Text from '../../components/Typography/Text';
 import Header from '../../containers/Header';
-import {getEventsByStateService} from '../../services/events';
-import StateSelector from '../../containers/forms/StateSelector';
-import {
-  getDiscountClubCategoriesByStateService,
-  getDiscountsByStateAndCategory,
-} from '../../services/discountClub';
+import { getDiscountClubCategoriesByStateService, getDiscountsByStateAndCategory } from '../../services/discountClub';
 import DiscountsClubCarrousel from '../../containers/discountsClub/DiscountsClubCarrousel';
 import DiscountCard from '../../containers/discountsClub/DiscountCard';
 import Loading from '../../components/Loading';
-import Button from '../../components/Buttons/Button';
-import {Screens} from '../../contants/screens';
 import TextButton from '../../components/Buttons/TextButton';
+import StateSelector from '../../containers/forms/StateSelector';
+import { Screens } from '../../contants/screens';
 
-export default ({navigation}) => {
-  const user = getUserFromStore();
-
+// Hook personalizado para gerenciamento de estado e chamadas API
+const useDiscountsClub = (selectedState) => {
   const [loadingDiscounts, setLoadingDiscounts] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [discounts, setDiscounts] = useState([]);
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState([]);
 
-  const [selectedState, setSelectedState] = useState(user.state);
-
-  useEffect(() => {
-    getCategories();
+  const fetchCategories = useCallback(async () => {
+    setLoadingCategories(true);
+    try {
+      const fetchedCategories = await getDiscountClubCategoriesByStateService(selectedState);
+      setCategories(fetchedCategories);
+    } catch (error) {
+      console.error('Erro ao buscar categorias:', error);
+    } finally {
+      setLoadingCategories(false);
+    }
   }, [selectedState]);
 
-  const loadCategoryDiscounts = async category => {
+  const loadCategoryDiscounts = useCallback(async (category) => {
+    setLoadingDiscounts(true);
     try {
-      setLoadingDiscounts(true);
-      const discounts = await getDiscountsByStateAndCategory(
-        selectedState,
-        category.id,
-      );
-      setDiscounts(discounts);
-      setLoadingDiscounts(false);
-    } catch (e) {
+      const fetchedDiscounts = await getDiscountsByStateAndCategory(selectedState, category.id);
+      setDiscounts(fetchedDiscounts);
+    } catch (error) {
+      console.error('Erro ao carregar descontos:', error);
+    } finally {
       setLoadingDiscounts(false);
     }
-  };
+  }, [selectedState]);
 
-  const getCategories = async () => {
-    try {
-      setDiscounts([]);
-      setLoadingCategories(true);
-      const categories = await getDiscountClubCategoriesByStateService(
-        selectedState,
-      );
-      setCategories(categories);
-      setLoadingCategories(false);
-    } catch (e) {
-      setLoadingCategories(false);
-    }
-  };
+  useEffect(() => {
+    fetchCategories();
+  }, [selectedState, fetchCategories]);
 
-  const filterByState = async stateId => {
+  return {
+    loadingDiscounts,
+    loadingCategories,
+    discounts,
+    categories,
+    loadCategoryDiscounts,
+  };
+};
+
+const DiscountsClubScreen = ({ navigation }) => {
+  const user = getUserFromStore();
+  const [selectedState, setSelectedState] = useState(user.state);
+
+  const { loadingDiscounts, loadingCategories, discounts, categories, loadCategoryDiscounts } = useDiscountsClub(selectedState);
+
+  const handleStateChange = useCallback(stateId => {
     setSelectedState(stateId);
-  };
+  }, []);
 
-  const EventsFilters = () => {
-    return (
-      <View
-        style={{
-          paddingLeft: 10,
-          paddingRight: 34,
-          minWidth: Dimensions.get('window').width / 2 - 10,
-        }}>
-        <StateSelector onValueChange={filterByState} selected={selectedState} />
-      </View>
-    );
-  };
-
-  const goToCategoriesScreen = () => {
+  const navigateToCategoriesScreen = useCallback(() => {
     navigation.push(Screens.DISCOUNTS_CLUB.navigator, {
       screen: Screens.DISCOUNTS_CLUB.DISCOUNT_CATEGORIES_SCREEN,
     });
-  };
+  }, [navigation]);
+
+  const renderEventsFilters = useMemo(() => (
+    <View style={styles.eventsFiltersContainer}>
+      <StateSelector onValueChange={handleStateChange} selected={selectedState} />
+    </View>
+  ), [handleStateChange, selectedState]);
 
   return (
     <>
       <Header />
-
       <ViewContainer noPaddingHorizontal>
         <FlatList
           refreshing={loadingDiscounts}
@@ -94,28 +89,16 @@ export default ({navigation}) => {
             loadingCategories ? (
               <Loading />
             ) : (
-              <View style={{marginBottom: 20}}>
-                <View
-                  style={{
-                    paddingBottom: 24,
-                    paddingTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                  }}>
+              <View style={styles.headerContainer}>
+                <View style={styles.headerTopRow}>
                   <TextButton
-                    style={{
-                      marginLeft: 24,
-                      marginRight: 10,
-                      borderBottomWidth: 1,
-                      paddingBottom: 10,
-                      minWidth: Dimensions.get('window').width / 2 - 10,
-                    }}
+                    style={styles.categoryButton}
                     text="Categorias"
-                    onPress={goToCategoriesScreen}
+                    onPress={navigateToCategoriesScreen}
                   />
-                  <EventsFilters />
+                  {renderEventsFilters}
                 </View>
-                {!loadingCategories && categories && categories.length > 0 && (
+                {categories.length > 0 && (
                   <DiscountsClubCarrousel
                     onChange={loadCategoryDiscounts}
                     categories={categories}
@@ -124,16 +107,42 @@ export default ({navigation}) => {
               </View>
             )
           }
-          ListEmptyComponent={() => (
-            <Text style={{padding: 24}}>Nenhum resultado foi encontrado</Text>
-          )}
+          ListEmptyComponent={() => <Text style={styles.emptyText}>Nenhum resultado foi encontrado</Text>}
           data={discounts}
-          renderItem={({item}) => (
-            <DiscountCard key={item.id} discount={item} />
-          )}
+          renderItem={({ item }) => <DiscountCard discount={item} />}
           keyExtractor={item => item.id}
         />
       </ViewContainer>
     </>
   );
 };
+
+// Estilos utilizando StyleSheet nativo
+const styles = StyleSheet.create({
+  eventsFiltersContainer: {
+    paddingLeft: 10,
+    paddingRight: 34,
+    minWidth: Dimensions.get('window').width / 2 - 10,
+  },
+  headerContainer: {
+    marginBottom: 20,
+  },
+  headerTopRow: {
+    paddingBottom: 24,
+    paddingTop: 12,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  categoryButton: {
+    marginLeft: 24,
+    marginRight: 10,
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    minWidth: Dimensions.get('window').width / 2 - 10,
+  },
+  emptyText: {
+    padding: 24,
+  },
+});
+
+export default DiscountsClubScreen;
