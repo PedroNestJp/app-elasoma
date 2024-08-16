@@ -8,6 +8,7 @@
     "ios": "react-native run-ios ",
     "build:apk": "cd android && ./gradlew assembleRelease",
     "build": "cd android && ./gradlew clean && ./gradlew build",
+    "generate:apk": "cd android && ./gradlew bundleRelease",
     "test": "jest",
     "prepare": "patch-package",
     "codepush-android": "appcenter codepush release-react -a brunno.hofmann-gmail.com/Seja-Soma-Android -d Production",
