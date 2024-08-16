@@ -16,6 +16,26 @@ import StateSelector from './StateSelector';
 import SegmentSelector from './SegmentSelector';
 import CitySelector from './CitySelector';
 
+function getMoney(str) {
+  if (str) {
+    return parseInt(str.replace(/[\D]+/g, '')) || 0;
+  }
+  return 0;
+}
+function formatReal(int) {
+  if (!int) {
+    return null;
+  }
+
+  let tmp = int + '';
+  tmp = tmp.replace(/([0-9]{2})$/g, ',$1');
+  if (tmp.length > 6) {
+    tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, '.$1,$2');
+  }
+
+  return `R$ ${tmp}`;
+}
+
 const PersonalDataForm = ({ onSubmit, loading }) => {
   const theme = useContext(ThemeContext);
   const { user } = useSelector(state => state.auth);
@@ -232,7 +252,7 @@ const PersonalDataForm = ({ onSubmit, loading }) => {
             />
           </FormItem>
 
-          <FormItem>
+          {/* <FormItem>
             <View style={styles.row}>
               <CheckBox
                 value={values.terms}
@@ -249,6 +269,39 @@ const PersonalDataForm = ({ onSubmit, loading }) => {
 
           <FormItem>
             <Button title="Enviar" onPress={handleSubmit} loading={loading} />
+          </FormItem> */}
+
+          <FormItem>
+            <View style={styles.row}>
+              <CheckBox
+                disabled={false}
+                value={values.terms}
+                onValueChange={newValue => setFieldValue('terms', newValue)}
+                tintColors={{
+                  false: theme.input.switch.darkMode,
+                  true: theme.input.switch.lightMode,
+                }}
+              />
+              <TouchableOpacity onPress={() => navigation.navigate('Termos de Uso')}>
+                <Text style={{ marginLeft: 8, color: theme.colors.primary }}>
+                  Li e aceito os termos e condições
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {errors.terms ? (
+              <Text style={{ color: 'red' }}>{errors.terms}</Text>
+            ) : null}
+          </FormItem>
+
+          <FormItem>
+            <Button
+              loading={loading}
+              onPress={handleSubmit}
+              size="large"
+              disabled={loading}
+              text="Enviar"
+              style={{ marginBottom: 44 }}
+            />
           </FormItem>
         </>
       )}
